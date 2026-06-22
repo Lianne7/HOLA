@@ -1,0 +1,90 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+/* ── HOLA Shared Background Decorations ── */
+.bg-decoration {
+    position: fixed;
+    z-index: 0;
+    opacity: 0.08;
+    pointer-events: none;
+}
+
+.leaf-1 {
+    top: 8%;
+    left: 4%;
+    width: 120px;
+    height: 120px;
+    background: #2ECC71;
+    border-radius: 0 100% 0 100%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.leaf-2 {
+    bottom: 12%;
+    right: 6%;
+    width: 160px;
+    height: 160px;
+    background: #E67E22;
+    border-radius: 100% 0 100% 0;
+    animation: float 8s ease-in-out infinite reverse;
+}
+
+.circle-1 {
+    top: 45%;
+    right: -60px;
+    width: 220px;
+    height: 220px;
+    background: #3498DB;
+    border-radius: 50%;
+    animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-28px) rotate(10deg);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.08;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 0.13;
+    }
+}

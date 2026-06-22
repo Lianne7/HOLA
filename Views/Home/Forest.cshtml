@@ -1,0 +1,1176 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Forest – HOLA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+            *, *::before, *::after {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            :root {
+                --sky-top: #0A1628;
+                --sky-mid: #0D2137;
+                --sky-low: #112D44;
+                --ground: #1A3A1A;
+                --ground-2: #143214;
+                --accent-green: #52B788;
+                --accent-lime: #95D5B2;
+                --accent-yellow: #F4D03F;
+                --accent-orange: #E76F2B;
+                --text: #E8F5E9;
+                --text-muted: #7FB89A;
+                --surface: rgba(255,255,255,0.05);
+                --surface-2: rgba(255,255,255,0.09);
+                --border: rgba(82,183,136,0.2);
+                --border-2: rgba(82,183,136,0.35);
+            }
+
+            body {
+                font-family: 'DM Sans', sans-serif;
+                background: var(--sky-top);
+                color: var(--text);
+                min-height: 100vh;
+                overflow-x: hidden;
+            }
+
+            /* Stars */
+            .stars {
+                position: fixed;
+                inset: 0;
+                pointer-events: none;
+                z-index: 0;
+            }
+
+            .star {
+                position: absolute;
+                background: white;
+                border-radius: 50%;
+                animation: twinkle var(--d, 3s) ease-in-out infinite;
+                animation-delay: var(--delay, 0s);
+            }
+
+            @@keyframes twinkle {
+                0%, 100% {
+                    opacity: 0.2;
+                    transform: scale(1);
+                }
+
+                50% {
+                    opacity: 1;
+                    transform: scale(1.3);
+                }
+            }
+
+            /* NAV */
+            nav {
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                background: rgba(10,22,40,0.85);
+                backdrop-filter: blur(16px);
+                border-bottom: 1px solid var(--border);
+                padding: 0 2rem;
+                height: 56px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .nav-logo {
+                font-family: 'Fraunces', serif;
+                font-size: 1.4rem;
+                font-weight: 700;
+                color: var(--accent-green);
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+                .nav-logo span {
+                    color: var(--accent-yellow);
+                }
+
+            .nav-back {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 7px 16px;
+                border-radius: 8px;
+                border: 1px solid var(--border-2);
+                background: var(--surface);
+                color: var(--text);
+                font-family: 'DM Sans', sans-serif;
+                font-size: 0.85rem;
+                cursor: pointer;
+                transition: all 0.2s;
+                text-decoration: none;
+            }
+
+                .nav-back:hover {
+                    background: var(--surface-2);
+                    border-color: var(--accent-green);
+                }
+
+            /* HERO STATS */
+            .hero-stats {
+                position: relative;
+                z-index: 2;
+                padding: 2rem 2rem 1rem;
+                max-width: 1100px;
+                margin: 0 auto;
+            }
+
+            .hero-heading {
+                font-family: 'Fraunces', serif;
+                font-size: clamp(1.8rem, 4vw, 2.8rem);
+                font-weight: 900;
+                line-height: 1.1;
+                margin-bottom: 0.4rem;
+            }
+
+            .hero-sub {
+                font-size: 0.95rem;
+                color: var(--text-muted);
+                margin-bottom: 1.5rem;
+            }
+
+            .stats-row {
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+                margin-bottom: 1rem;
+            }
+
+            .stat-pill {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                background: var(--surface-2);
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                padding: 10px 18px;
+                backdrop-filter: blur(8px);
+            }
+
+            .stat-pill-icon {
+                font-size: 1.4rem;
+            }
+
+            .stat-pill-val {
+                font-family: 'Fraunces', serif;
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: var(--accent-lime);
+                line-height: 1;
+            }
+
+            .stat-pill-label {
+                font-size: 0.75rem;
+                color: var(--text-muted);
+            }
+
+         
+            .xp-bar-wrap {
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: 0 2rem 1.5rem;
+                position: relative;
+                z-index: 2;
+            }
+
+            .xp-bar-label {
+                display: flex;
+                justify-content: space-between;
+                font-size: 0.8rem;
+                color: var(--text-muted);
+                margin-bottom: 6px;
+            }
+
+                .xp-bar-label strong {
+                    color: var(--accent-green);
+                }
+
+            .xp-track {
+                height: 10px;
+                background: rgba(255,255,255,0.08);
+                border-radius: 10px;
+                overflow: hidden;
+                border: 1px solid var(--border);
+            }
+
+            .xp-fill {
+                height: 100%;
+                border-radius: 10px;
+                background: linear-gradient(90deg, var(--accent-green), var(--accent-lime));
+                width: 0%;
+                transition: width 1.5s cubic-bezier(0.4,0,0.2,1);
+                position: relative;
+                overflow: hidden;
+            }
+
+                .xp-fill::after {
+                    content: '';
+                    position: absolute;
+                    inset: 0;
+                    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+                    animation: shimmer 2s infinite;
+                }
+
+            @@keyframes shimmer {
+                0% {
+                    transform: translateX(-100%);
+                }
+
+                100% {
+                    transform: translateX(100%);
+                }
+            }
+
+        
+            .forest-controls {
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: 0 2rem 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 0.75rem;
+                position: relative;
+                z-index: 2;
+            }
+
+            .filter-tabs {
+                display: flex;
+                gap: 4px;
+                background: var(--surface);
+                padding: 4px;
+                border-radius: 10px;
+                border: 1px solid var(--border);
+            }
+
+            .ftab {
+                padding: 6px 14px;
+                border-radius: 7px;
+                border: none;
+                background: transparent;
+                font-family: 'DM Sans', sans-serif;
+                font-size: 0.82rem;
+                color: var(--text-muted);
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+
+                .ftab.active {
+                    background: var(--accent-green);
+                    color: #fff;
+                }
+
+            .view-toggle {
+                display: flex;
+                gap: 4px;
+            }
+
+            .vtog {
+                width: 34px;
+                height: 34px;
+                border-radius: 8px;
+                border: 1px solid var(--border);
+                background: var(--surface);
+                color: var(--text-muted);
+                font-size: 1rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.2s;
+            }
+
+                .vtog.active {
+                    background: var(--surface-2);
+                    color: var(--accent-green);
+                    border-color: var(--accent-green);
+                }
+
+            .forest-scene-wrap {
+                position: relative;
+                z-index: 2;
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: 0 2rem 1.5rem;
+            }
+
+            .forest-scene {
+                background: linear-gradient(180deg, #0D2137 0%, #112D44 40%, #163820 70%, #1A3A1A 100%);
+                border-radius: 20px;
+                border: 1px solid var(--border);
+                overflow: hidden;
+                position: relative;
+                height: 380px;
+                cursor: default;
+            }
+
+            /* Moon */
+            .moon {
+                position: absolute;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                background: radial-gradient(circle at 35% 35%, #FFF9C4, #F4D03F);
+                top: 24px;
+                right: 80px;
+                box-shadow: 0 0 40px rgba(244,208,63,0.4), 0 0 80px rgba(244,208,63,0.15);
+                animation: moonFloat 8s ease-in-out infinite;
+            }
+
+            @@keyframes moonFloat {
+                0%, 100% {
+                    transform: translateY(0);
+                }
+
+                50% {
+                    transform: translateY(-6px);
+                }
+            }
+
+         
+            .firefly {
+                position: absolute;
+                width: 4px;
+                height: 4px;
+                border-radius: 50%;
+                background: #95D5B2;
+                box-shadow: 0 0 6px #95D5B2;
+                animation: flyfly var(--dur, 4s) ease-in-out infinite;
+                animation-delay: var(--del, 0s);
+            }
+
+            @@keyframes flyfly {
+                0% {
+                    transform: translate(0,0);
+                    opacity: 0;
+                }
+
+                20% {
+                    opacity: 1;
+                }
+
+                50% {
+                    transform: translate(var(--tx,20px), var(--ty,-20px));
+                    opacity: 0.8;
+                }
+
+                80% {
+                    opacity: 1;
+                }
+
+                100% {
+                    transform: translate(var(--tx2,40px), var(--ty2,10px));
+                    opacity: 0;
+                }
+            }
+
+            .ground-layer {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+
+            .ground-back {
+                height: 80px;
+                background: linear-gradient(180deg, #143214, #0D200D);
+                border-radius: 60% 60% 0 0 / 20px 20px 0 0;
+            }
+
+            .ground-front {
+                height: 50px;
+                background: linear-gradient(180deg, #1A4A1A, #143214);
+                border-radius: 40% 40% 0 0 / 15px 15px 0 0;
+                bottom: 0;
+            }
+
+            /* SVG Tree */
+            .tree-slot {
+                position: absolute;
+                bottom: 30px;
+                transform-origin: bottom center;
+                cursor: pointer;
+                transition: transform 0.25s ease;
+            }
+
+                .tree-slot:hover {
+                    transform: scale(1.08) translateY(-4px);
+                }
+
+                    .tree-slot:hover .tree-glow {
+                        opacity: 1;
+                    }
+
+            .tree-glow {
+                position: absolute;
+                bottom: -8px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 60px;
+                height: 20px;
+                border-radius: 50%;
+                background: radial-gradient(ellipse, rgba(82,183,136,0.5), transparent 70%);
+                opacity: 0;
+                transition: opacity 0.25s;
+            }
+
+            .tree-svg {
+                display: block;
+            }
+
+            /* Tree tooltip */
+            .tree-tooltip {
+                display: none;
+                position: absolute;
+                bottom: calc(100% + 12px);
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(10,22,40,0.95);
+                border: 1px solid var(--border-2);
+                border-radius: 10px;
+                padding: 8px 12px;
+                white-space: nowrap;
+                font-size: 0.78rem;
+                color: var(--text);
+                pointer-events: none;
+                z-index: 10;
+                backdrop-filter: blur(8px);
+            }
+
+                .tree-tooltip::after {
+                    content: '';
+                    position: absolute;
+                    top: 100%;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    border: 5px solid transparent;
+                    border-top-color: var(--border-2);
+                }
+
+            .tree-slot:hover .tree-tooltip {
+                display: block;
+            }
+
+            .tt-name {
+                font-weight: 600;
+                color: var(--accent-lime);
+                margin-bottom: 2px;
+            }
+
+            .tt-info {
+                color: var(--text-muted);
+                font-size: 0.72rem;
+            }
+
+            /* TREE GRID */
+            .tree-grid {
+                display: none;
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                gap: 1rem;
+            }
+
+                .tree-grid.show {
+                    display: grid;
+                }
+
+            .tree-card {
+                background: var(--surface-2);
+                border: 1px solid var(--border);
+                border-radius: 14px;
+                padding: 1rem;
+                text-align: center;
+                cursor: pointer;
+                transition: all 0.2s;
+                animation: fadeUp 0.3s ease backwards;
+            }
+
+                .tree-card:hover {
+                    border-color: var(--accent-green);
+                    background: rgba(82,183,136,0.1);
+                    transform: translateY(-3px);
+                }
+
+            @@keyframes fadeUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .tc-svg {
+                margin: 0 auto 8px;
+                display: block;
+            }
+
+            .tc-name {
+                font-size: 0.82rem;
+                font-weight: 600;
+                color: var(--accent-lime);
+                margin-bottom: 2px;
+            }
+
+            .tc-date {
+                font-size: 0.72rem;
+                color: var(--text-muted);
+            }
+
+            .tc-badge {
+                display: inline-block;
+                font-size: 0.68rem;
+                padding: 2px 8px;
+                border-radius: 50px;
+                margin-top: 6px;
+                font-weight: 500;
+            }
+
+          
+            .achievements-wrap {
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: 0 2rem 3rem;
+                position: relative;
+                z-index: 2;
+            }
+
+            .section-label {
+                font-family: 'Fraunces', serif;
+                font-size: 1.1rem;
+                font-weight: 700;
+                margin-bottom: 1rem;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .badges-row {
+                display: flex;
+                gap: 0.75rem;
+                flex-wrap: wrap;
+            }
+
+            .badge-card {
+                background: var(--surface-2);
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                padding: 12px 16px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                transition: all 0.2s;
+                cursor: default;
+            }
+
+                .badge-card:hover {
+                    border-color: var(--accent-green);
+                }
+
+                .badge-card.locked {
+                    opacity: 0.4;
+                    filter: grayscale(1);
+                }
+
+            .badge-icon {
+                font-size: 1.8rem;
+            }
+
+            .badge-name {
+                font-size: 0.85rem;
+                font-weight: 600;
+                color: var(--accent-lime);
+            }
+
+            .badge-desc {
+                font-size: 0.72rem;
+                color: var(--text-muted);
+            }
+
+            /* TREE DETAIL MODAL */
+            .modal-overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.7);
+                z-index: 500;
+                align-items: center;
+                justify-content: center;
+                padding: 1rem;
+                backdrop-filter: blur(4px);
+            }
+
+                .modal-overlay.show {
+                    display: flex;
+                }
+
+            .tree-modal {
+                background: linear-gradient(135deg, #0D2137, #112D44);
+                border: 1px solid var(--border-2);
+                border-radius: 20px;
+                padding: 2rem;
+                max-width: 400px;
+                width: 100%;
+                text-align: center;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+                animation: popIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
+            }
+
+            @@keyframes popIn {
+                from {
+                    opacity: 0;
+                    transform: scale(0.85);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+
+            .tm-close {
+                position: absolute;
+                top: 16px;
+                right: 16px;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                border: 1px solid var(--border);
+                background: var(--surface);
+                color: var(--text);
+                font-size: 0.9rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .tree-modal {
+                position: relative;
+            }
+
+            .tm-tree-name {
+                font-family: 'Fraunces', serif;
+                font-size: 1.4rem;
+                font-weight: 700;
+                color: var(--accent-lime);
+                margin: 1rem 0 0.25rem;
+            }
+
+            .tm-earned {
+                font-size: 0.85rem;
+                color: var(--text-muted);
+                margin-bottom: 1.25rem;
+            }
+
+            .tm-stats {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0.75rem;
+                margin-bottom: 1.25rem;
+            }
+
+            .tm-stat {
+                background: var(--surface);
+                border-radius: 10px;
+                padding: 10px;
+                border: 1px solid var(--border);
+            }
+
+            .tm-stat-val {
+                font-family: 'Fraunces', serif;
+                font-size: 1.3rem;
+                font-weight: 700;
+                color: var(--accent-green);
+            }
+
+            .tm-stat-label {
+                font-size: 0.72rem;
+                color: var(--text-muted);
+            }
+
+            .tm-quote {
+                font-size: 0.82rem;
+                color: var(--text-muted);
+                font-style: italic;
+                border-top: 1px solid var(--border);
+                padding-top: 1rem;
+                line-height: 1.7;
+            }
+
+            @@media (max-width: 600px) {
+                .hero-stats, .xp-bar-wrap, .forest-controls, .forest-scene-wrap, .achievements-wrap {
+                    padding-left: 1rem;
+                    padding-right: 1rem;
+                }
+
+                .forest-scene {
+                    height: 280px;
+                }
+
+                nav {
+                    padding: 0 1rem;
+                }
+            }
+    </style>
+</head>
+<body>
+    <div class="bg-decoration leaf-1"></div>
+    <div class="bg-decoration leaf-2"></div>
+    <div class="bg-decoration circle-1"></div>
+
+    <div class="stars" id="stars"></div>
+
+    <nav>
+        <div class="nav-logo">HOLA</div>
+        <a class="nav-back" href="javascript:history.back()">← Go Back</a>
+    </nav>
+
+    <div class="hero-stats">
+        <div class="hero-heading">🌳 My Forest</div>
+        <div class="hero-sub">Every question asked, every answer shared — a new tree grows here.</div>
+        <div class="stats-row">
+            <div class="stat-pill">
+                <div class="stat-pill-icon">🌲</div>
+                <div>
+                    <div class="stat-pill-val" id="treeCountVal">0</div>
+                    <div class="stat-pill-label">Trees Grown</div>
+                </div>
+            </div>
+            <div class="stat-pill">
+                <div class="stat-pill-icon">🌱</div>
+                <div>
+                    <div class="stat-pill-val" id="ecoPointsVal">0</div>
+                    <div class="stat-pill-label">Eco Points</div>
+                </div>
+            </div>
+            <div class="stat-pill">
+                <div class="stat-pill-icon">☁️</div>
+                <div>
+                    <div class="stat-pill-val" id="co2Val">0 kg</div>
+                    <div class="stat-pill-label">CO₂ Offset</div>
+                </div>
+            </div>
+            <div class="stat-pill">
+                <div class="stat-pill-icon">🔥</div>
+                <div>
+                    <div class="stat-pill-val" id="streakVal">1</div>
+                    <div class="stat-pill-label">Day Streak</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="xp-bar-wrap">
+        <div class="xp-bar-label">
+            <span>Progress to next tree</span>
+            <span><strong id="xpText">0</strong> / 1,000 pts</span>
+        </div>
+        <div class="xp-track">
+            <div class="xp-fill" id="xpFill"></div>
+        </div>
+    </div>
+
+    <div class="forest-controls">
+        <div class="filter-tabs">
+            <button class="ftab active" onclick="filterTrees('all', this)">All Trees</button>
+            <button class="ftab" onclick="filterTrees('forum', this)">💬 Forum</button>
+            <button class="ftab" onclick="filterTrees('streak', this)">🔥 Streak</button>
+        </div>
+        <div class="view-toggle">
+            <button class="vtog active" id="sceneBtn" onclick="setView('scene')" title="Forest view">🌲</button>
+            <button class="vtog" id="gridBtn" onclick="setView('grid')" title="Grid view">⊞</button>
+        </div>
+    </div>
+
+    <div class="forest-scene-wrap">
+        <div class="forest-scene" id="forestScene">
+            <div class="moon"></div>
+
+            <div class="ground-layer ground-back"></div>
+            <div class="ground-layer ground-front"></div>
+
+            <div id="treeSlots"></div>
+        </div>
+
+        <div class="tree-grid" id="treeGrid"></div>
+    </div>
+
+    <div class="achievements-wrap">
+        <div class="section-label">🏅 Eco Badges</div>
+        <div class="badges-row" id="badgesRow"></div>
+    </div>
+
+    <div class="modal-overlay" id="treeModal">
+        <div class="tree-modal">
+            <button class="tm-close" onclick="closeModal()">✕</button>
+            <div id="modalTreeSVG"></div>
+            <div class="tm-tree-name" id="modalName"></div>
+            <div class="tm-earned" id="modalEarned"></div>
+            <div class="tm-stats">
+                <div class="tm-stat">
+                    <div class="tm-stat-val" id="modalPts"></div>
+                    <div class="tm-stat-label">Points Earned</div>
+                </div>
+                <div class="tm-stat">
+                    <div class="tm-stat-val" id="modalCO2"></div>
+                    <div class="tm-stat-label">CO₂ Offset</div>
+                </div>
+            </div>
+            <div class="tm-quote" id="modalQuote"></div>
+        </div>
+    </div>
+
+    <script>
+          
+            const currentUserName = "@(User.Identity?.Name?.Split('@')[0] ?? "Guest")";
+            const treeKey = 'holaTreeCount_' + currentUserName;
+
+         
+            const treeTypes = {
+                forum1: { color1: '#1D4ED8', color2: '#60A5FA', trunkColor: '#5C4033', label: 'Forum Tree', bg: 'rgba(96,165,250,0.15)', text: '#60A5FA' },
+                forum2: { color1: '#065F46', color2: '#34D399', trunkColor: '#5C4033', label: 'Forum Tree', bg: 'rgba(52,211,153,0.15)', text: '#34D399' },
+                forum3: { color1: '#2D6A4F', color2: '#52B788', trunkColor: '#5C4033', label: 'Forum Tree', bg: 'rgba(82,183,136,0.15)', text: '#52B788' },
+                streak: { color1: '#C2410C', color2: '#F97316', trunkColor: '#5C4033', label: 'Streak Tree', bg: 'rgba(249,115,22,0.15)', text: '#F97316' },
+            };
+
+            const quotes = [
+                "Every tree you grow is a promise to the future. 🌍",
+                "Knowledge and nature grow together. Keep learning! 📚",
+                "Your dedication is making the world greener. 🌿",
+                "Small actions, big forests. You're doing amazing. 🌱",
+                "Learning is the seed. Your forest is the proof. 🌳",
+            ];
+
+            const trees = [];
+
+            
+            let savedTreeCount = parseInt(localStorage.getItem(treeKey)) || 0;
+
+            let ecoPts = savedTreeCount * 100;
+            let co2Offset = (savedTreeCount * 0.25).toFixed(1);
+            let currentXp = ecoPts % 1000;
+            let xpPercent = (currentXp / 1000) * 100;
+            
+
+            let streakDays = 1 + Math.floor(savedTreeCount / 7);
+
+
+            document.getElementById('treeCountVal').textContent = savedTreeCount;
+            document.getElementById('ecoPointsVal').textContent = ecoPts;
+            document.getElementById('co2Val').textContent = co2Offset + ' kg';
+            document.getElementById('xpText').textContent = currentXp;
+            document.getElementById('streakVal').textContent = streakDays;
+
+    
+            trees.length = 0;
+            for (let i = 0; i < savedTreeCount; i++) {
+                let tType = '';
+                let tEarned = '';
+                
+
+                if ((i + 1) % 7 === 0) {
+                    tType = 'streak';
+                    tEarned = 'Maintained a 7-day learning streak';
+                } else {
+  
+                    const forumTypes = ['forum1', 'forum2', 'forum3'];
+                    tType = forumTypes[i % forumTypes.length];
+                    tEarned = 'Posted an answer in the forum';
+                }
+
+                trees.push({
+                    id: i + 1,
+                    type: tType,
+                    name: 'HOLA Tree',
+                    earned: tEarned,
+                    pts: 100,
+                    co2: '0.25 kg',
+                    date: 'Today'
+                });
+            }
+
+            const badges = [
+                { icon: '🌱', name: 'Seedling', desc: 'Grew your first tree', unlocked: savedTreeCount >= 1 },
+                { icon: '💡', name: 'Knowledge Sharer', desc: 'Posted 5 answers', unlocked: savedTreeCount >= 5 },
+                { icon: '🌳', name: 'Sapling', desc: 'Grew 10 trees', unlocked: savedTreeCount >= 10 },
+                { icon: '🔥', name: 'Streak Master', desc: 'Maintained a 14-day streak', unlocked: streakDays >= 14 },
+                { icon: '🏆', name: 'Grove Keeper', desc: 'Grew 25 trees', unlocked: savedTreeCount >= 25 },
+                { icon: '🌍', name: 'Eco Legend', desc: 'Grew 50 trees', unlocked: savedTreeCount >= 50 },
+                { icon: '💬', name: 'Community Hero', desc: '100 helpful forum posts', unlocked: savedTreeCount >= 100},
+            ];
+
+            let currentFilter = 'all';
+            let currentView = 'scene';
+
+     
+
+            function makeSVGTree(type, size = 80, animated = true) {
+                const t = treeTypes[type];
+                const animAttr = animated ? `style="animation: treeGrow 0.6s ease backwards"` : '';
+
+       
+                if (type === 'streak') {
+              
+                    return `<svg width="${size}" height="${size * 1.2}" viewBox="0 0 60 72" xmlns="http://www.w3.org/2000/svg" class="tree-svg" ${animAttr}>
+                        <rect x="27" y="54" width="6" height="14" rx="2" fill="${t.trunkColor}"/>
+                        <ellipse cx="30" cy="30" rx="18" ry="22" fill="${t.color1}"/>
+                        <ellipse cx="30" cy="24" rx="13" ry="16" fill="${t.color2}"/>
+                        <ellipse cx="30" cy="18" rx="8" ry="10" fill="#95D5B2" opacity="0.7"/>
+                        <circle cx="22" cy="28" r="3" fill="${t.color2}" opacity="0.5"/>
+                        <circle cx="38" cy="26" r="4" fill="${t.color1}" opacity="0.6"/>
+                    </svg>`;
+                } else if (type === 'forum1') {
+                  
+                    return `<svg width="${size}" height="${size * 1.2}" viewBox="0 0 60 72" xmlns="http://www.w3.org/2000/svg" class="tree-svg" ${animAttr}>
+                        <rect x="27" y="52" width="6" height="16" rx="2" fill="${t.trunkColor}"/>
+                        <circle cx="30" cy="30" r="22" fill="${t.color1}"/>
+                        <circle cx="18" cy="26" r="12" fill="${t.color2}" opacity="0.85"/>
+                        <circle cx="42" cy="24" r="11" fill="${t.color2}" opacity="0.85"/>
+                        <circle cx="30" cy="16" r="13" fill="${t.color2}" opacity="0.9"/>
+                        <circle cx="30" cy="20" r="8" fill="#BFEFFF" opacity="0.3"/>
+                    </svg>`;
+                } else if (type === 'forum2') {
+                
+                    return `<svg width="${size * 1.1}" height="${size * 1.2}" viewBox="0 0 66 72" xmlns="http://www.w3.org/2000/svg" class="tree-svg" ${animAttr}>
+                        <rect x="30" y="50" width="6" height="18" rx="2" fill="${t.trunkColor}"/>
+                        <ellipse cx="33" cy="32" rx="28" ry="18" fill="${t.color1}"/>
+                        <ellipse cx="33" cy="26" rx="20" ry="14" fill="${t.color2}"/>
+                        <ellipse cx="33" cy="22" rx="13" ry="10" fill="#A7F3D0" opacity="0.7"/>
+                        <circle cx="15" cy="36" r="8" fill="${t.color1}"/>
+                        <circle cx="51" cy="34" r="8" fill="${t.color1}"/>
+                    </svg>`;
+                } else {
+      
+                    return `<svg width="${size * 0.9}" height="${size * 1.3}" viewBox="0 0 54 78" xmlns="http://www.w3.org/2000/svg" class="tree-svg" ${animAttr}>
+                        <rect x="24" y="58" width="6" height="16" rx="2" fill="${t.trunkColor}"/>
+                        <polygon points="27,6 46,40 8,40" fill="${t.color1}"/>
+                        <polygon points="27,18 48,52 6,52" fill="${t.color2}"/>
+                        <polygon points="27,30 46,60 8,60" fill="${t.color1}" opacity="0.9"/>
+                        <circle cx="27" cy="10" r="4" fill="#D8F3DC" opacity="0.6"/>
+                    </svg>`;
+                }
+            }
+
+
+            function renderScene(filtered) {
+                const container = document.getElementById('treeSlots');
+                container.innerHTML = '';
+
+                const sceneW = document.getElementById('forestScene').offsetWidth || 1000;
+                const sceneH = 380;
+                const groundY = sceneH - 55;
+
+
+                const slots = [];
+                const cols = Math.min(filtered.length, 12);
+                for (let i = 0; i < cols; i++) {
+                    const x = 60 + (i / Math.max(cols - 1, 1)) * (sceneW - 140);
+           
+                    const depthRand = 0.55 + Math.random() * 0.45;
+                    const size = Math.floor(48 + depthRand * 36);
+                    const y = groundY - size * 1.1 - (depthRand < 0.72 ? 20 : 0);
+                    slots.push({ x, y, size, depthRand });
+                }
+
+
+                slots.sort((a, b) => a.depthRand - b.depthRand);
+
+                filtered.slice(0, 12).forEach((tree, i) => {
+                    const slot = slots[i];
+                    const t = treeTypes[tree.type];
+                    const delay = i * 0.07;
+
+                    const div = document.createElement('div');
+                    div.className = 'tree-slot';
+                    div.style.cssText = `left:${slot.x - slot.size / 2}px; bottom:${sceneH - slot.y - slot.size * 1.3}px; z-index:${Math.round(slot.depthRand * 10)};`;
+                    div.style.animationDelay = delay + 's';
+                    div.onclick = () => openModal(tree);
+
+                    div.innerHTML = `
+                        <div class="tree-glow"></div>
+                        <div class="tree-tooltip">
+                            <div class="tt-name">${tree.name}</div>
+                            <div class="tt-info">${t.label} · ${tree.date}</div>
+                            <div class="tt-info">${tree.earned}</div>
+                        </div>
+                        ${makeSVGTree(tree.type, slot.size, true)}
+                    `;
+
+                
+                    div.querySelector('.tree-svg').style.cssText = `animation: treeGrow 0.5s ease ${delay}s both;`;
+                    container.appendChild(div);
+                });
+
+        
+                if (filtered.length > 12) {
+                    const more = document.createElement('div');
+                    more.style.cssText = `position:absolute; bottom:60px; right:20px; background:rgba(10,22,40,0.8); border:1px solid rgba(82,183,136,0.3); border-radius:8px; padding:8px 14px; font-size:0.8rem; color:#95D5B2; font-family:'Fraunces',serif; font-weight:700;`;
+                    more.textContent = `+${filtered.length - 12} more trees`;
+                    container.appendChild(more);
+                }
+            }
+
+
+            function renderGrid(filtered) {
+                const grid = document.getElementById('treeGrid');
+                grid.innerHTML = '';
+                filtered.forEach((tree, i) => {
+                    const t = treeTypes[tree.type];
+                    const card = document.createElement('div');
+                    card.className = 'tree-card';
+                    card.style.animationDelay = (i * 0.04) + 's';
+                    card.onclick = () => openModal(tree);
+                    card.innerHTML = `
+                        <div class="tc-svg">${makeSVGTree(tree.type, 60, false)}</div>
+                        <div class="tc-name">${tree.name}</div>
+                        <div class="tc-date">${tree.date}</div>
+                        <span class="tc-badge" style="background:${t.bg}; color:${t.text}">${t.label}</span>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+
+
+
+            function getFiltered() {
+                if (currentFilter === 'all') return trees;
+                if (currentFilter === 'forum') return trees.filter(t => t.type.startsWith('forum'));
+                return trees.filter(t => t.type === currentFilter);
+            }
+
+            function renderAll() {
+                const filtered = getFiltered();
+                if (currentView === 'scene') {
+                    document.getElementById('forestScene').style.display = 'block';
+                    document.getElementById('treeGrid').classList.remove('show');
+                    renderScene(filtered);
+                } else {
+                    document.getElementById('forestScene').style.display = 'none';
+                    document.getElementById('treeGrid').classList.add('show');
+                    renderGrid(filtered);
+                }
+            }
+
+            function filterTrees(type, el) {
+                currentFilter = type;
+                document.querySelectorAll('.ftab').forEach(t => t.classList.remove('active'));
+                el.classList.add('active');
+                renderAll();
+            }
+
+            function setView(v) {
+                currentView = v;
+                document.getElementById('sceneBtn').classList.toggle('active', v === 'scene');
+                document.getElementById('gridBtn').classList.toggle('active', v === 'grid');
+                renderAll();
+            }
+
+
+            function openModal(tree) {
+                document.getElementById('modalTreeSVG').innerHTML = makeSVGTree(tree.type, 100, false);
+                document.getElementById('modalName').textContent = tree.name;
+                document.getElementById('modalEarned').textContent = '🎉 ' + tree.earned;
+                document.getElementById('modalPts').textContent = tree.pts;
+                document.getElementById('modalCO2').textContent = tree.co2;
+                document.getElementById('modalQuote').textContent = quotes[tree.id % quotes.length];
+                document.getElementById('treeModal').classList.add('show');
+            }
+
+            function closeModal() {
+                document.getElementById('treeModal').classList.remove('show');
+            }
+
+            document.getElementById('treeModal').addEventListener('click', function (e) {
+                if (e.target === this) closeModal();
+            });
+
+
+            function renderBadges() {
+                document.getElementById('badgesRow').innerHTML = badges.map(b => `
+                    <div class="badge-card ${b.unlocked ? '' : 'locked'}">
+                        <div class="badge-icon">${b.icon}</div>
+                        <div>
+                            <div class="badge-name">${b.name}</div>
+                            <div class="badge-desc">${b.unlocked ? b.desc : '🔒 ' + b.desc}</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+ 
+
+            function makeStars() {
+                const container = document.getElementById('stars');
+                for (let i = 0; i < 80; i++) {
+                    const s = document.createElement('div');
+                    s.className = 'star';
+                    const size = Math.random() * 2.5 + 0.5;
+                    s.style.cssText = `
+                        width:${size}px; height:${size}px;
+                        left:${Math.random() * 100}%;
+                        top:${Math.random() * 60}%;
+                        --d:${2 + Math.random() * 4}s;
+                        --delay:${Math.random() * 4}s;
+                    `;
+                    container.appendChild(s);
+                }
+            }
+
+            function makeFireflies() {
+                const scene = document.getElementById('forestScene');
+                for (let i = 0; i < 10; i++) {
+                    const f = document.createElement('div');
+                    f.className = 'firefly';
+                    const x = 10 + Math.random() * 80;
+                    const y = 30 + Math.random() * 50;
+                    f.style.cssText = `
+                        left:${x}%; top:${y}%;
+                        --dur:${3 + Math.random() * 4}s;
+                        --del:${Math.random() * 4}s;
+                        --tx:${(Math.random() - 0.5) * 60}px;
+                        --ty:${(Math.random() - 0.5) * 40}px;
+                        --tx2:${(Math.random() - 0.5) * 80}px;
+                        --ty2:${(Math.random() - 0.5) * 40}px;
+                    `;
+                    scene.appendChild(f);
+                }
+            }
+
+            const style = document.createElement('style');
+            style.textContent = `
+                @@keyframes treeGrow {
+                    from { opacity:0; transform: scaleY(0.2) translateY(30px); }
+                    to   { opacity:1; transform: scaleY(1) translateY(0); }
+                }
+            `;
+            document.head.appendChild(style);
+
+            makeStars();
+            makeFireflies();
+            renderAll();
+            renderBadges();
+
+            setTimeout(() => {
+                document.getElementById('xpFill').style.width = xpPercent + '%';
+            }, 400);
+    </script>
+</body>
+</html>

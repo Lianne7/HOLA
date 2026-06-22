@@ -1,0 +1,284 @@
+﻿@model HOLA.Models.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register - HOLA";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Righteous&display=swap" rel="stylesheet">
+
+    <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            :root {
+                --green-primary: #2ECC71;
+                --green-dark: #27AE60;
+                --orange: #E67E22;
+                --purple: #9B59B6;
+                --blue: #3498DB;
+                --dark: #2C3E50;
+            }
+
+            body {
+                font-family: 'Poppins', sans-serif;
+                background: #FFF5E6;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+            }
+
+            @@keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .register-container {
+                background: white;
+                border-radius: 30px;
+                box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+                max-width: 1000px;
+                width: 100%;
+                padding: 3rem;
+                animation: fadeIn 0.6s ease-out;
+            }
+
+            .header {
+                text-align: center;
+                margin-bottom: 3rem;
+            }
+
+            .logo {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+
+            h1 {
+                font-family: 'Righteous', cursive;
+                font-size: 2.5rem;
+                color: var(--dark);
+                margin-bottom: 0.5rem;
+            }
+
+            .subtitle {
+                color: #7f8c8d;
+                font-size: 1.1rem;
+            }
+
+            .form-step {
+                display: none;
+                animation: fadeIn 0.4s ease-out;
+            }
+
+                .form-step.active {
+                    display: block;
+                }
+
+            .btn {
+                padding: 1rem;
+                border: none;
+                border-radius: 12px;
+                font-size: 1rem;
+                font-weight: 700;
+                cursor: pointer;
+            }
+
+            .btn-next {
+                background: var(--green-primary);
+                color: white;
+            }
+
+            .btn-back {
+                background: #f1f1f1;
+            }
+
+            .form-group {
+                margin-bottom: 1.5rem;
+            }
+
+                .form-group label {
+                    display: block;
+                    margin-bottom: 0.5rem;
+                    font-weight: 600;
+                    color: var(--dark);
+                }
+
+            .form-control {
+                width: 100%;
+                padding: 1rem;
+                border: 2px solid #e0e0e0;
+                border-radius: 12px;
+                font-size: 1rem;
+                font-family: 'Poppins', sans-serif;
+            }
+
+                .form-control:focus {
+                    outline: none;
+                    border-color: var(--green-primary);
+                }
+                
+            /* Styles for the Error Summary Box */
+            .validation-summary-errors {
+                background-color: #FDEDEC;
+                color: #E74C3C;
+                padding: 15px;
+                border-radius: 12px;
+                margin-bottom: 20px;
+                font-size: 0.95rem;
+            }
+            .validation-summary-errors ul {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+            }
+            .validation-summary-errors li {
+                margin-bottom: 5px;
+            }
+    </style>
+</head>
+<body>
+    <div class="bg-decoration leaf-1"></div>
+    <div class="bg-decoration leaf-2"></div>
+    <div class="bg-decoration circle-1"></div>
+
+    <div class="register-container">
+
+        <div class="header">
+            <div class="logo">🌱</div>
+            <h1>Join HOLA</h1>
+            <p class="subtitle">Start your eco-friendly learning adventure</p>
+        </div>
+
+        <form asp-action="Register" asp-controller="Account" method="post" id="registerForm">
+
+            <div asp-validation-summary="All" class="validation-summary-errors"></div>
+
+            <div class="form-step active" data-step="1">
+                <h3>Choose Your Role</h3>
+
+                <div class="form-group">
+                    <label asp-for="UserTier"></label>
+                    <select asp-for="UserTier" class="form-control">
+                        <option value="Student">Student</option>
+                        <option value="Teacher">Teacher</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+
+                <button type="button" class="btn btn-next" onclick="nextStep()">
+                    Continue
+                </button>
+            </div>
+
+            <div class="form-step" data-step="2">
+                <h3>Personal Information</h3>
+
+                <div class="form-group">
+                    <label asp-for="FirstName"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="LastName"></label>
+                    <input asp-for="LastName" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control" />
+                </div>
+
+                <button type="button" class="btn btn-back" onclick="prevStep()">
+                    Back
+                </button>
+
+                <button type="button" class="btn btn-next" onclick="nextStep()">
+                    Continue
+                </button>
+            </div>
+
+            <div class="form-step" data-step="3">
+                <h3>Create Account</h3>
+
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" type="password" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ConfirmPassword"></label>
+                    <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                </div>
+
+                <button type="button" class="btn btn-back" onclick="prevStep()">
+                    Back
+                </button>
+
+                <button type="submit" class="btn btn-next">
+                    Create Account 🚀
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+            let currentStep = 1;
+
+            // Simple logic to ensure we show the errors if the page reloaded with them
+            document.addEventListener('DOMContentLoaded', function() {
+                const errorBox = document.querySelector('.validation-summary-errors ul');
+                if(errorBox && errorBox.children.length > 0) {
+                    // If there are errors, they will display at the top of Step 1 so you can see them!
+                    errorBox.style.display = 'block';
+                }
+            });
+
+            function nextStep() {
+                if (currentStep < 3) {
+                    document.querySelector(`.form-step[data-step="${currentStep}"]`)
+                        .classList.remove('active');
+
+                    currentStep++;
+
+                    document.querySelector(`.form-step[data-step="${currentStep}"]`)
+                        .classList.add('active');
+                }
+            }
+
+            function prevStep() {
+                if (currentStep > 1) {
+                    document.querySelector(`.form-step[data-step="${currentStep}"]`)
+                        .classList.remove('active');
+
+                    currentStep--;
+
+                    document.querySelector(`.form-step[data-step="${currentStep}"]`)
+                        .classList.add('active');
+                }
+            }
+    </script>
+</body>
+</html>

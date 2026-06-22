@@ -1,0 +1,252 @@
+﻿@model HOLA.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login - HOLA";
+    Layout = null; // Use no layout for custom design
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Righteous&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" />
+    <!-- Copy all the styles from login.html here -->
+    <style>
+
+                * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                    font-family: 'Poppins', sans-serif;
+                }
+
+                body {
+                background: white;
+                    height: 100vh;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .login-container {
+                    display: flex;
+                    width: 900px;
+                    background: white;
+                    border-radius: 20px;
+                    overflow: hidden;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                }
+
+            .login-left {
+                flex: 1;
+                background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb');
+                background-size: cover;
+                background-position: center;
+                color: white;
+                padding: 60px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .overlay {
+                text-align: left;
+
+            }
+
+                .overlay h1 {
+                    font-size: 52px;
+                    color: white;
+                    font-weight: 700;
+                    line-height: 1.1;
+                    margin-bottom: 20px;
+                }
+
+                .overlay p {
+                    color: white;
+                    font-size: 20px;
+                    line-height: 1.6;
+                    max-width: 420px;
+                }
+
+                .login-right {
+                    flex: 1;
+                    padding: 60px;
+                }
+
+                    .login-right h2 {
+                        font-size: 32px;
+                        margin-bottom: 10px;
+                    }
+
+                .subtitle {
+                    color: #777;
+                    margin-bottom: 30px;
+                }
+
+                .form-group {
+                    margin-bottom: 20px;
+                }
+
+                    .form-group label {
+                        display: block;
+                        margin-bottom: 8px;
+                        font-weight: 600;
+                    }
+
+                    .form-group input {
+                        width: 100%;
+                        padding: 14px;
+                        border: 1px solid #ddd;
+                        border-radius: 10px;
+                        font-size: 16px;
+                    }
+
+                .remember-forgot {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 25px;
+                }
+
+            .auth-actions {
+                display: flex;
+                gap: 18px;
+                margin-top: 30px;
+            }
+
+            .btn {
+                min-width: 160px;
+                height: 55px;
+                border: none;
+                border-radius: 14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                font-size: 17px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .btn-login {
+                background: linear-gradient(135deg, #3498db, #2575fc);
+                color: white;
+                box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
+            }
+
+            .btn-register {
+                background: linear-gradient(135deg, #2ecc71, #27ae60);
+                color: white;
+                box-shadow: 0 8px 20px rgba(46, 204, 113, 0.3);
+            }
+
+            .btn:hover {
+                transform: translateY(-3px);
+            }
+
+            .btn-login:hover {
+                box-shadow: 0 12px 25px rgba(52, 152, 219, 0.45);
+            }
+
+            .btn-register:hover {
+                box-shadow: 0 12px 25px rgba(46, 204, 113, 0.45);
+            }
+
+            .signup-text {
+                margin-top: 28px;
+                text-align: center;
+                font-size: 18px;
+                color: #666;
+            }
+
+                .signup-text a {
+                    color: #3498db;
+                    font-weight: 700;
+                    text-decoration: none;
+                }
+
+                .text-danger {
+                    color: red;
+                    font-size: 14px;
+                }
+    </style>
+</head>
+<body>
+        <div class="bg-decoration leaf-1"></div>
+        <div class="bg-decoration leaf-2"></div>
+        <div class="bg-decoration circle-1"></div>
+
+        <!-- rest of your page content -->
+    <!-- Copy the HTML structure from login.html -->
+
+    <div class="login-container">
+        <div class="login-left">
+            <div class="hero-text">
+                <h1>Learn & Protect Nature 🌿</h1>
+               
+                <p>
+                    Join HOLA and explore environmental awareness,
+                    sustainability, and green learning.
+                </p>
+            </div>
+        </div>
+
+        <div class="login-right">
+            <h2>Welcome!👋</h2>
+            <p class="subtitle">Continue your learning journey</p>
+
+            <!-- ASP.NET MVC Form -->
+            <form asp-action="Login" asp-controller="Account" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="Email">Email Address</label>
+                    <input asp-for="Email" type="email" placeholder="JuanDelaCruz@example.com" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Password">Password</label>
+                    <input asp-for="Password" type="password" placeholder="Enter your password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="remember-forgot">
+                    <label class="checkbox-label">
+                        <input asp-for="RememberMe" type="checkbox" />
+                        <span>Remember me</span>
+                    </label>
+                    <a asp-controller="Account" asp-action="ForgotPassword" class="forgot-link">
+                        Forgot Password?
+                    </a>
+                    </div>
+                <div class="auth-actions">
+                    <button type="submit" class="btn btn-login">
+                        Sign In
+                    </button>
+                    <a asp-controller="Account" asp-action="Register" class="btn btn-register">
+                        Register
+                    </a>
+                    </a>
+                </div>
+            </form>
+
+            <div class="signup-text">
+                Don't have an account?
+                <div class="signup-text">
+                    Register Now!
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+
+    }
+</body>
+</html>

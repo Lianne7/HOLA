@@ -1,0 +1,1192 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOLA Forum</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Righteous&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+            *, *::before, *::after {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            :root {
+                --bg: #F7F4EF;
+                --surface: #FFFFFF;
+                --surface2: #F0EDE6;
+                --surface3: #E8E4DC;
+                --text: #1C1917;
+                --text-2: #57534E;
+                --text-3: #A8A29E;
+                --green: #2D6A4F;
+                --green-l: #D8F3DC;
+                --green-m: #52B788;
+                --orange: #C2410C;
+                --orange-l: #FEF3C7;
+                --blue: #1D4ED8;
+                --blue-l: #DBEAFE;
+                --red: #DC2626;
+                --red-l: #FEE2E2;
+                --purple: #7C3AED;
+                --purple-l: #EDE9FE;
+                --border: rgba(28,25,23,0.1);
+                --border-2: rgba(28,25,23,0.18);
+                --shadow-sm: 0 1px 3px rgba(28,25,23,0.08);
+                --shadow: 0 4px 16px rgba(28,25,23,0.1);
+                --shadow-lg: 0 12px 40px rgba(28,25,23,0.14);
+                --r: 12px;
+                --r-sm: 8px;
+            }
+
+            body {
+                font-family: 'DM Sans', sans-serif;
+                background: var(--bg);
+                color: var(--text);
+                min-height: 100vh;
+            }
+
+            /* NAV */
+            nav {
+                background: var(--surface);
+                border-bottom: 1px solid var(--border);
+                padding: 0 1.5rem;
+                height: 56px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                position: sticky;
+                top: 0;
+                z-index: 200;
+                box-shadow: var(--shadow-sm);
+            }
+
+            .nav-logo {
+                font-family: 'Fraunces', serif;
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: var(--green);
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+                .nav-logo span {
+                    color: var(--orange);
+                }
+
+            .nav-search {
+                flex: 1;
+                max-width: 380px;
+                margin: 0 2rem;
+                position: relative;
+            }
+
+                .nav-search input {
+                    width: 100%;
+                    padding: 8px 16px 8px 38px;
+                    border-radius: 50px;
+                    border: 1px solid var(--border-2);
+                    background: var(--surface2);
+                    font-family: 'DM Sans', sans-serif;
+                    font-size: 0.88rem;
+                    color: var(--text);
+                    outline: none;
+                    transition: all 0.2s;
+                }
+
+                    .nav-search input:focus {
+                        background: var(--surface);
+                        border-color: var(--green);
+                        box-shadow: 0 0 0 3px rgba(45,106,79,0.12);
+                    }
+
+            .nav-search-icon {
+                position: absolute;
+                left: 12px;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 0.9rem;
+                color: var(--text-3);
+            }
+
+            .nav-right {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .nav-avatar {
+                width: 34px;
+                height: 34px;
+                border-radius: 50%;
+                background: var(--green-l);
+                border: 2px solid var(--green);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.8rem;
+                font-weight: 600;
+                color: var(--green);
+                cursor: pointer;
+            }
+
+            /* LAYOUT */
+            .layout {
+                max-width: 1180px;
+                margin: 0 auto;
+                padding: 1.5rem 1rem;
+                display: grid;
+                grid-template-columns: 220px 1fr 300px;
+                gap: 1.5rem;
+                align-items: start;
+            }
+
+            /* SIDEBAR LEFT */
+            .sidebar-left {
+                position: sticky;
+                top: 72px;
+            }
+
+            .sidebar-section {
+                background: var(--surface);
+                border-radius: var(--r);
+                border: 1px solid var(--border);
+                overflow: hidden;
+                margin-bottom: 1rem;
+                box-shadow: var(--shadow-sm);
+            }
+
+            .sidebar-title {
+                padding: 12px 16px;
+                font-size: 0.72rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: var(--text-3);
+                border-bottom: 1px solid var(--border);
+                background: var(--surface2);
+            }
+
+            .board-item {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 10px 16px;
+                cursor: pointer;
+                transition: background 0.15s;
+                border-bottom: 1px solid var(--border);
+                text-decoration: none;
+                color: var(--text);
+            }
+
+                .board-item:last-child {
+                    border-bottom: none;
+                }
+
+                .board-item:hover {
+                    background: var(--surface2);
+                }
+
+                .board-item.active {
+                    background: var(--green-l);
+                }
+
+            .board-dot {
+                width: 28px;
+                height: 28px;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.9rem;
+                flex-shrink: 0;
+            }
+
+            .board-info {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .board-name {
+                font-size: 0.88rem;
+                font-weight: 500;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .board-count {
+                font-size: 0.73rem;
+                color: var(--text-3);
+            }
+
+            /* FEED */
+            .feed-top {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 1rem;
+                flex-wrap: wrap;
+                gap: 0.75rem;
+            }
+
+            .feed-title {
+                font-family: 'Fraunces', serif;
+                font-size: 1.4rem;
+                font-weight: 700;
+            }
+
+            .sort-tabs {
+                display: flex;
+                gap: 4px;
+                background: var(--surface);
+                padding: 4px;
+                border-radius: 50px;
+                border: 1px solid var(--border);
+            }
+
+            .sort-tab {
+                padding: 5px 14px;
+                border-radius: 50px;
+                border: none;
+                background: transparent;
+                font-family: 'DM Sans', sans-serif;
+                font-size: 0.82rem;
+                font-weight: 500;
+                color: var(--text-2);
+                cursor: pointer;
+                transition: all 0.15s;
+            }
+
+                .sort-tab.active {
+                    background: var(--green);
+                    color: white;
+                }
+
+            /* CREATE POST BAR */
+            .create-post {
+                background: var(--surface);
+                border-radius: var(--r);
+                border: 1px solid var(--border);
+                padding: 1rem;
+                margin-bottom: 1rem;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                box-shadow: var(--shadow-sm);
+                cursor: pointer;
+                transition: border-color 0.2s;
+            }
+
+                .create-post:hover {
+                    border-color: var(--green);
+                }
+
+            .create-avatar {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                background: var(--green-l);
+                border: 2px solid var(--green);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.8rem;
+                font-weight: 600;
+                color: var(--green);
+                flex-shrink: 0;
+            }
+
+            .create-input {
+                flex: 1;
+                padding: 9px 16px;
+                border-radius: 50px;
+                border: 1px solid var(--border-2);
+                background: var(--surface2);
+                font-family: 'DM Sans', sans-serif;
+                font-size: 0.9rem;
+                color: var(--text-3);
+                cursor: pointer;
+                outline: none;
+                transition: all 0.2s;
+            }
+
+                .create-input:focus {
+                    background: var(--surface);
+                    border-color: var(--green);
+                    color: var(--text);
+                }
+
+            /* POST CARD */
+            .post-card {
+                background: var(--surface);
+                border-radius: var(--r);
+                border: 1px solid var(--border);
+                margin-bottom: 0.75rem;
+                display: flex;
+                overflow: hidden;
+                box-shadow: var(--shadow-sm);
+                transition: border-color 0.2s, box-shadow 0.2s;
+                animation: fadeUp 0.3s ease backwards;
+                cursor: pointer;
+                position: relative;
+            }
+
+            @@keyframes fadeUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .post-card:nth-child(1) { animation-delay: 0.05s; }
+            .post-card:nth-child(2) { animation-delay: 0.1s; }
+            .post-card:nth-child(3) { animation-delay: 0.15s; }
+            .post-card:nth-child(4) { animation-delay: 0.2s; }
+            .post-card:nth-child(5) { animation-delay: 0.25s; }
+
+            .post-card:hover {
+                border-color: var(--border-2);
+                box-shadow: var(--shadow);
+            }
+
+            /* VOTE */
+            .vote-col {
+                width: 44px;
+                background: var(--surface2);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 12px 0;
+                gap: 4px;
+                flex-shrink: 0;
+            }
+
+            .vote-btn {
+                width: 28px;
+                height: 28px;
+                border-radius: 6px;
+                border: none;
+                background: transparent;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1rem;
+                cursor: pointer;
+                transition: all 0.15s;
+                color: var(--text-3);
+            }
+
+                .vote-btn:hover { background: var(--surface3); color: var(--text); }
+                .vote-btn.up.voted { color: var(--orange); background: var(--orange-l); }
+                .vote-btn.down.voted { color: var(--blue); background: var(--blue-l); }
+
+            .vote-count {
+                font-size: 0.8rem;
+                font-weight: 600;
+                color: var(--text);
+                line-height: 1;
+            }
+
+                .vote-count.positive { color: var(--orange); }
+                .vote-count.negative { color: var(--blue); }
+
+            /* POST BODY */
+            .post-body { flex: 1; padding: 12px 14px; min-width: 0; }
+            .post-meta { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
+            .post-board { font-size: 0.75rem; font-weight: 600; padding: 2px 8px; border-radius: 50px; text-decoration: none; transition: opacity 0.15s; }
+            .post-board:hover { opacity: 0.75; }
+            .post-dot { color: var(--text-3); font-size: 0.7rem; }
+            .post-author { font-size: 0.75rem; color: var(--text-2); }
+            .post-time { font-size: 0.73rem; color: var(--text-3); margin-left: auto; }
+            .post-title { font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 600; line-height: 1.45; margin-bottom: 6px; color: var(--text); }
+            .post-excerpt { font-size: 0.85rem; color: var(--text-2); line-height: 1.6; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+            .post-tags { display: flex; gap: 5px; margin-bottom: 8px; flex-wrap: wrap; }
+            .tag { font-size: 0.72rem; padding: 2px 8px; border-radius: 50px; font-weight: 500; }
+            .post-footer { display: flex; align-items: center; gap: 4px; }
+            .post-action { display: flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 6px; border: none; background: transparent; font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-2); cursor: pointer; transition: background 0.15s; }
+            .post-action:hover { background: var(--surface2); }
+
+            /* ── 3-DOT MENU (NEW) ── */
+            .post-menu-wrap { position: absolute; top: 10px; right: 10px; z-index: 10; }
+            .post-menu-btn { width: 28px; height: 28px; border-radius: 6px; border: none; background: transparent; color: var(--text-3); font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; line-height: 1; }
+            .post-menu-btn:hover { background: var(--surface2); color: var(--text); }
+            .post-menu-dropdown { display: none; position: absolute; top: 32px; right: 0; background: var(--surface); border: 1px solid var(--border-2); border-radius: 10px; box-shadow: var(--shadow); min-width: 130px; overflow: hidden; animation: dropIn 0.15s ease; z-index: 50; }
+            @@keyframes dropIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+            .post-menu-dropdown.open { display: block; }
+            .menu-item { display: flex; align-items: center; gap: 8px; padding: 9px 14px; font-size: 0.83rem; font-weight: 500; cursor: pointer; transition: background 0.12s; border: none; background: transparent; width: 100%; text-align: left; font-family: 'DM Sans', sans-serif; color: var(--text); }
+            .menu-item:hover { background: var(--surface2); }
+            .menu-item.danger { color: var(--red); }
+            .menu-item.danger:hover { background: var(--red-l); }
+
+            /* SIDEBAR RIGHT */
+            .sidebar-right { position: sticky; top: 72px; }
+            .widget { background: var(--surface); border-radius: var(--r); border: 1px solid var(--border); overflow: hidden; margin-bottom: 1rem; box-shadow: var(--shadow-sm); }
+            .widget-header { padding: 14px 16px 10px; border-bottom: 1px solid var(--border); }
+            .widget-title { font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 700; }
+            .widget-subtitle { font-size: 0.78rem; color: var(--text-3); margin-top: 2px; }
+            .widget-body { padding: 12px 16px; }
+            .trending-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+            .trending-item:last-child { border-bottom: none; }
+            .trending-item:hover .trending-title { color: var(--green); }
+            .trending-rank { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 700; color: var(--text-3); min-width: 20px; line-height: 1.3; }
+            .trending-title { font-size: 0.85rem; font-weight: 500; line-height: 1.4; transition: color 0.15s; }
+            .trending-meta { font-size: 0.73rem; color: var(--text-3); margin-top: 2px; }
+            
+            /* ECO IMPACT */
+            .eco-widget-inner { text-align: center; padding: 8px 0 4px; }
+            .eco-trees { font-size: 2.5rem; font-family: 'Fraunces', serif; font-weight: 700; color: var(--green); line-height: 1; }
+            .eco-label { font-size: 0.78rem; color: var(--text-3); margin-top: 4px; margin-bottom: 12px; }
+            .eco-bar-wrap { height: 8px; background: var(--surface2); border-radius: 8px; overflow: hidden; margin-bottom: 6px; }
+            .eco-bar { height: 100%; background: linear-gradient(90deg, var(--green-m), var(--green)); border-radius: 8px; width: 0%; transition: width 1s ease; }
+            .eco-bar-label { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--text-3); }
+            
+            .btn-full { display: block; width: 100%; padding: 9px; border-radius: var(--r-sm); border: none; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; cursor: pointer; text-align: center; transition: all 0.2s; margin-top: 10px; text-decoration: none; }
+            .btn-green { background: var(--green); color: white; }
+            .btn-green:hover { background: #1B4332; }
+
+            /* MODALS SHARED */
+            .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(28,25,23,0.55); z-index: 300; align-items: flex-start; justify-content: center; padding: 1.5rem 1rem; overflow-y: auto; }
+            .modal-overlay.show { display: flex; }
+            .modal { background: var(--bg); border-radius: 16px; width: 100%; max-width: 720px; box-shadow: var(--shadow-lg); animation: modalIn 0.3s cubic-bezier(0.34,1.56,0.64,1); margin: auto; }
+            @@keyframes modalIn { from { opacity: 0; transform: scale(0.94) translateY(16px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+            .modal-nav { background: var(--surface); padding: 12px 16px; border-radius: 16px 16px 0 0; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); }
+            .modal-back { padding: 6px 12px; border-radius: 8px; border: 1px solid var(--border-2); background: transparent; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; cursor: pointer; color: var(--text-2); transition: background 0.15s; }
+            .modal-back:hover { background: var(--surface2); }
+            .modal-breadcrumb { font-size: 0.82rem; color: var(--text-3); }
+            .modal-breadcrumb span { color: var(--text-2); font-weight: 500; }
+            .thread-post { background: var(--surface); margin: 1rem; border-radius: var(--r); border: 1px solid var(--border); overflow: hidden; }
+            .thread-body { padding: 1.25rem 1.25rem 1rem; }
+            .thread-title { font-family: 'Fraunces', serif; font-size: 1.3rem; font-weight: 700; line-height: 1.4; margin-bottom: 10px; }
+            .thread-content { font-size: 0.9rem; line-height: 1.75; color: var(--text-2); margin-bottom: 14px; }
+            .thread-footer { display: flex; align-items: center; gap: 6px; padding: 10px 1.25rem; border-top: 1px solid var(--border); background: var(--surface2); }
+            .thread-vote { display: flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--border-2); border-radius: 50px; padding: 4px 12px; }
+            .tv-btn { border: none; background: transparent; cursor: pointer; font-size: 1rem; color: var(--text-3); padding: 0; transition: color 0.15s; }
+            .tv-btn:hover { color: var(--orange); }
+            .tv-btn.down:hover { color: var(--blue); }
+            .tv-count { font-size: 0.85rem; font-weight: 600; }
+            .comments-section { padding: 0 1rem 1rem; }
+            .comments-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
+            .comments-title { font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 700; }
+            .comment-box { background: var(--surface); border-radius: var(--r); border: 1px solid var(--border); padding: 1rem; margin-bottom: 0.75rem; }
+            .comment-input { width: 100%; min-height: 80px; padding: 10px 14px; border-radius: var(--r-sm); border: 1px solid var(--border-2); background: var(--surface2); font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--text); resize: vertical; outline: none; transition: all 0.2s; }
+            .comment-input:focus { background: var(--surface); border-color: var(--green); }
+            .comment-submit { display: flex; justify-content: flex-end; margin-top: 8px; }
+            .comment-card { background: var(--surface); border-radius: var(--r); border: 1px solid var(--border); padding: 12px 14px; margin-bottom: 0.6rem; animation: fadeUp 0.25s ease backwards; }
+            .comment-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+            .comment-avatar { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 600; flex-shrink: 0; }
+            .comment-author { font-size: 0.82rem; font-weight: 600; }
+            .comment-time { font-size: 0.72rem; color: var(--text-3); margin-left: auto; }
+            .comment-text { font-size: 0.85rem; line-height: 1.65; color: var(--text-2); margin-bottom: 8px; }
+            .comment-actions { display: flex; gap: 4px; }
+            .ca-btn { display: flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 6px; border: none; background: transparent; font-family: 'DM Sans', sans-serif; font-size: 0.75rem; color: var(--text-3); cursor: pointer; transition: background 0.15s; }
+            .ca-btn:hover { background: var(--surface2); color: var(--text-2); }
+            .ca-btn.liked { color: var(--orange); }
+
+            /* CREATE / EDIT POST MODAL */
+            .create-modal { display: none; position: fixed; inset: 0; background: rgba(28,25,23,0.55); z-index: 400; align-items: center; justify-content: center; padding: 1rem; }
+            .create-modal.show { display: flex; }
+            .create-modal-inner { background: var(--surface); border-radius: 16px; width: 100%; max-width: 580px; box-shadow: var(--shadow-lg); animation: modalIn 0.3s cubic-bezier(0.34,1.56,0.64,1); max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; }
+            .cm-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+            .cm-title { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 700; }
+            .cm-close { width: 30px; height: 30px; border-radius: 50%; border: none; background: var(--surface2); cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: background 0.15s; }
+            .cm-close:hover { background: var(--surface3); }
+            .cm-body { padding: 16px 20px; overflow-y: auto; flex: 1; }
+            .cm-field { margin-bottom: 14px; }
+            .cm-label { font-size: 0.8rem; font-weight: 600; color: var(--text-2); margin-bottom: 6px; display: block; }
+            .cm-input { width: 100%; padding: 10px 14px; border-radius: var(--r-sm); border: 1px solid var(--border-2); background: var(--surface2); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--text); outline: none; transition: all 0.2s; }
+            .cm-input:focus { background: var(--surface); border-color: var(--green); box-shadow: 0 0 0 3px rgba(45,106,79,0.1); }
+            .cm-textarea { width: 100%; min-height: 120px; padding: 10px 14px; border-radius: var(--r-sm); border: 1px solid var(--border-2); background: var(--surface2); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--text); outline: none; resize: vertical; transition: all 0.2s; }
+            .cm-textarea:focus { background: var(--surface); border-color: var(--green); box-shadow: 0 0 0 3px rgba(45,106,79,0.1); }
+            .cm-select { width: 100%; padding: 10px 14px; border-radius: var(--r-sm); border: 1px solid var(--border-2); background: var(--surface2); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--text); outline: none; cursor: pointer; }
+            .cm-footer { padding: 14px 20px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 8px; background: white; flex-shrink: 0; }
+            .btn-sm { padding: 8px 18px; border-radius: var(--r-sm); border: 1.5px solid; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+            .btn-sm-ghost { background: transparent; border-color: var(--border-2); color: var(--text-2); }
+            .btn-sm-ghost:hover { background: var(--surface2); }
+            .btn-sm-green { background: var(--green); border-color: #1B4332; color: white; }
+            .btn-sm-green:hover { background: #1B4332; }
+
+            /* ── DELETE CONFIRM MODAL (NEW) ── */
+            .delete-modal { display: none; position: fixed; inset: 0; background: rgba(28,25,23,0.6); z-index: 500; align-items: center; justify-content: center; padding: 1rem; }
+            .delete-modal.show { display: flex; }
+            .delete-modal-inner { background: var(--surface); border-radius: 16px; padding: 2rem; max-width: 420px; width: 100%; box-shadow: var(--shadow-lg); text-align: center; animation: modalIn 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+            .delete-icon { width: 60px; height: 60px; border-radius: 50%; background: var(--red-l); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin: 0 auto 1rem; }
+            .delete-title { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+            .delete-desc { font-size: 0.87rem; color: var(--text-2); line-height: 1.6; margin-bottom: 1.5rem; }
+            .delete-preview { background: var(--surface2); border-radius: 10px; padding: 10px 14px; font-size: 0.85rem; font-weight: 500; color: var(--text); margin-bottom: 1.5rem; border-left: 3px solid var(--red); text-align: left; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+            .delete-actions { display: flex; gap: 10px; justify-content: center; }
+            .btn-sm-red { background: var(--red); border-color: #991B1B; color: white; }
+            .btn-sm-red:hover { background: #991B1B; }
+
+            /* TOAST */
+            .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--text); color: white; padding: 12px 20px; border-radius: 10px; font-size: 0.88rem; font-weight: 500; box-shadow: var(--shadow-lg); z-index: 9999; display: flex; align-items: center; gap: 8px; transform: translateY(80px); opacity: 0; transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1); pointer-events: none; }
+            .toast.show { transform: translateY(0); opacity: 1; }
+            .toast.green { background: var(--green); }
+            .toast.red { background: var(--red); }
+
+            /* Responsive */
+            @@media (max-width: 900px) {
+                .layout { grid-template-columns: 1fr; }
+                .sidebar-left, .sidebar-right { position: static; }
+                .sidebar-left { display: none; }
+            }
+            @@media (max-width: 600px) {
+                .nav-search { display: none; }
+                .feed-top { flex-direction: column; align-items: flex-start; }
+            }
+    </style>
+</head>
+<body>
+    <div class="bg-decoration leaf-1"></div>
+    <div class="bg-decoration leaf-2"></div>
+    <div class="bg-decoration circle-1"></div>
+
+    <div class="toast" id="toast"></div>
+
+    <nav>
+        <div class="nav-logo">HOLA<span style="font-size:0.8rem; color:var(--text-3); font-family:'DM Sans',sans-serif; font-weight:400;">/ Forum</span></div>
+        <div class="nav-search">
+            <span class="nav-search-icon">🔍</span>
+            <input type="text" placeholder="Search boards, posts, topics…" oninput="filterPosts(this.value)">
+        </div>
+        <div class="nav-right">
+            <button class="btn-sm btn-sm-green" onclick="openCreate()">+ New Post</button>
+            <a asp-controller="Home" asp-action="Index" class="btn-sm btn-sm-ghost" style="text-decoration:none">Logout</a>
+            <div class="nav-avatar">?</div>
+        </div>
+    </nav>
+
+    <div class="layout">
+
+        <aside class="sidebar-left">
+            <div class="sidebar-section">
+                <div class="sidebar-title">My Boards</div>
+                <a class="board-item active" onclick="filterBoard('all', event)">
+                    <div class="board-dot" style="background:#D8F3DC">🏠</div>
+                    <div class="board-info"><div class="board-name">Home Feed</div><div class="board-count">All posts</div></div>
+                </a>
+                <a class="board-item" onclick="filterBoard('climate', event)">
+                    <div class="board-dot" style="background:#FEE2E2">🌡️</div>
+                    <div class="board-info"><div class="board-name">Climate Talk</div><div class="board-count">2.4k members</div></div>
+                </a>
+                <a class="board-item" onclick="filterBoard('study', event)">
+                    <div class="board-dot" style="background:#DBEAFE">📚</div>
+                    <div class="board-info"><div class="board-name">Study Help</div><div class="board-count">5.1k members</div></div>
+                </a>
+                <a class="board-item" onclick="filterBoard('eco', event)">
+                    <div class="board-dot" style="background:#D8F3DC">🌿</div>
+                    <div class="board-info"><div class="board-name">Eco Warriors</div><div class="board-count">1.8k members</div></div>
+                </a>
+                <a class="board-item" onclick="filterBoard('tech', event)">
+                    <div class="board-dot" style="background:#EDE9FE">💻</div>
+                    <div class="board-info"><div class="board-name">Green Tech</div><div class="board-count">3.2k members</div></div>
+                </a>
+                <a class="board-item" onclick="filterBoard('general', event)">
+                    <div class="board-dot" style="background:#FEF3C7">💬</div>
+                    <div class="board-info"><div class="board-name">General Chat</div><div class="board-count">8.9k members</div></div>
+                </a>
+            </div>
+        </aside>
+
+        <main>
+            <div class="feed-top">
+                <div class="feed-title">📋 Forum Feed</div>
+                <div class="sort-tabs">
+                    <button class="sort-tab active" onclick="sortPosts('hot', this)">🔥 Hot</button>
+                    <button class="sort-tab" onclick="sortPosts('new', this)">✨ New</button>
+                    <button class="sort-tab" onclick="sortPosts('top', this)">📈 Top</button>
+                </div>
+            </div>
+
+            <div class="create-post" onclick="openCreate()">
+                <div class="create-avatar">?</div>
+                <input class="create-input" placeholder="Share something with your community…" readonly>
+            </div>
+
+            <div id="feedContainer"></div>
+        </main>
+
+        <aside class="sidebar-right">
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-title">🌱 Your Eco Impact</div>
+                    <div class="widget-subtitle">Forum activity = eco points</div>
+                </div>
+                <div class="widget-body">
+                    <div class="eco-widget-inner">
+                        <div class="eco-trees" id="uiTreeCount">0</div>
+                        <div class="eco-label">virtual trees grown</div>
+                    </div>
+                    <div class="eco-bar-wrap"><div class="eco-bar" id="ecoBar"></div></div>
+                    <div class="eco-bar-label"><span id="uiEcoPts">0 pts</span><span>Next tree at 1,000</span></div>
+                    <a asp-controller="Home" asp-action="Forest" class="btn-full btn-green">View My Forest 🌳</a>
+                </div>
+            </div>
+
+            <div class="widget">
+                <div class="widget-header"><div class="widget-title">📈 Trending Today</div></div>
+                <div class="widget-body" style="padding: 4px 16px 12px;" id="trendingList"></div>
+            </div>
+
+            <div class="widget">
+                <div class="widget-header"><div class="widget-title">📌 Community Rules</div></div>
+                <div class="widget-body" style="font-size:0.82rem; color:var(--text-2); line-height:1.8;">
+                    <div>1. Be respectful to all learners</div>
+                    <div>2. Stay on-topic per board</div>
+                    <div>3. No spam or self-promotion</div>
+                    <div>4. Cite your sources</div>
+                    <div>5. Use eco-friendly language 🌿</div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="modal-overlay" id="threadModal">
+        <div class="modal">
+            <div class="modal-nav">
+                <button class="modal-back" onclick="closeThread()">← Back</button>
+                <div class="modal-breadcrumb">Forum / <span id="threadBoard">—</span></div>
+            </div>
+            <div class="thread-post">
+                <div class="thread-body">
+                    <div class="post-meta" id="threadMeta"></div>
+                    <div class="thread-title" id="threadTitle"></div>
+                    <div class="thread-content" id="threadContent"></div>
+                    <div class="post-tags" id="threadTags"></div>
+                </div>
+                <div class="thread-footer">
+                    <div class="thread-vote">
+                        <button class="tv-btn" onclick="threadVoteUp()">▲</button>
+                        <span class="tv-count" id="threadVoteCount">0</span>
+                        <button class="tv-btn down" onclick="threadVoteDown()">▼</button>
+                    </div>
+                    <button class="post-action">💬 <span id="threadCommentCount">0</span> Comments</button>
+                </div>
+            </div>
+            <div class="comments-section">
+                <div class="comments-header">
+                    <div class="comments-title">Comments</div>
+                    <div style="font-size:0.78rem; color:var(--text-3);" id="commentCountLabel"></div>
+                </div>
+                <div class="comment-box">
+                    <textarea class="comment-input" id="commentInput" placeholder="Share your thoughts…"></textarea>
+                    <div class="comment-submit">
+                        <button class="btn-sm btn-sm-green" onclick="addComment()">Post Comment</button>
+                    </div>
+                </div>
+                <div id="commentsContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="create-modal" id="createModal">
+        <div class="create-modal-inner">
+            <div class="cm-header">
+                <div class="cm-title" id="modalFormTitle">✏️ Create a Post</div>
+                <button class="cm-close" onclick="closeCreate()">✕</button>
+            </div>
+            <div class="cm-body">
+                <input type="hidden" id="editingPostId" value="">
+
+                <div class="cm-field">
+                    <label class="cm-label">Board</label>
+                    <select class="cm-select" id="newBoard">
+                        <option value="climate">🌡️ Climate Talk</option>
+                        <option value="study">📚 Study Help</option>
+                        <option value="eco">🌿 Eco Warriors</option>
+                        <option value="tech">💻 Green Tech</option>
+                        <option value="general">💬 General Chat</option>
+                    </select>
+                </div>
+                <div class="cm-field">
+                    <label class="cm-label">Title</label>
+                    <input class="cm-input" id="newTitle" placeholder="What's on your mind?">
+                </div>
+                <div class="cm-field">
+                    <label class="cm-label">Content</label>
+                    <textarea class="cm-textarea" id="newContent" placeholder="Share your thoughts, questions, or insights…"></textarea>
+                </div>
+
+                <div class="cm-field">
+                    <label class="cm-label">Tags (comma-separated)</label>
+                    <input class="cm-input" id="newTags" placeholder="e.g. climate, study-tips, eco">
+                </div>
+
+                <div class="cm-field" id="imagePreviewContainer" style="display:none;">
+                    <label class="cm-label">Preview</label>
+                    <img id="imagePreview" style="max-width:100%; border-radius:12px;">
+                </div>
+            </div>
+            <div class="cm-footer">
+                <button class="btn-sm btn-sm-ghost" onclick="closeCreate()">Cancel</button>
+                <button class="btn-sm btn-sm-green" id="formSubmitBtn" onclick="submitPost()">Post 🌱</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="delete-modal" id="deleteModal">
+        <div class="delete-modal-inner">
+            <div class="delete-icon">🗑️</div>
+            <div class="delete-title">Delete this post?</div>
+            <div class="delete-desc">This action cannot be undone. The post will be permanently removed from the forum.</div>
+            <div class="delete-preview" id="deletePreviewTitle"></div>
+            <div class="delete-actions">
+                <button class="btn-sm btn-sm-ghost" onclick="closeDeleteModal()">Cancel</button>
+                <button class="btn-sm btn-sm-red" onclick="confirmDelete()">🗑️ Yes, Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+            const currentUserName = "@(User.Identity?.Name?.Split('@')[0] ?? "Guest")";
+            const treeKey = 'holaTreeCount_' + currentUserName;
+            const postKey = 'holaPosts_' + currentUserName;
+
+            const boardColors = {
+                climate: { bg: '#FEE2E2', text: '#991B1B', emoji: '🌡️' },
+                study: { bg: '#DBEAFE', text: '#1E40AF', emoji: '📚' },
+                eco: { bg: '#D8F3DC', text: '#1B4332', emoji: '🌿' },
+                tech: { bg: '#EDE9FE', text: '#5B21B6', emoji: '💻' },
+                general: { bg: '#FEF3C7', text: '#92400E', emoji: '💬' },
+            };
+
+            const tagColors = {
+                'climate-change': { bg: '#FEE2E2', text: '#991B1B' },
+                'renewable': { bg: '#D8F3DC', text: '#1B4332' },
+                'study-tips': { bg: '#DBEAFE', text: '#1E40AF' },
+                'research': { bg: '#EDE9FE', text: '#5B21B6' },
+                'eco-life': { bg: '#D8F3DC', text: '#1B4332' },
+                'green-tech': { bg: '#EDE9FE', text: '#5B21B6' },
+                'discussion': { bg: '#FEF3C7', text: '#92400E' },
+                'resources': { bg: '#DBEAFE', text: '#1E40AF' },
+                'quiz': { bg: '#FCE7F3', text: '#9D174D' },
+                'data': { bg: '#E0F2FE', text: '#075985' },
+            };
+
+            const fakePosts = [
+                { id: 1, board: 'climate', author: 'Maria Santos', initials: 'MS', avatarBg: '#FEE2E2', avatarColor: '#991B1B', title: 'Why is the 1.5°C climate target so important? A breakdown for students', excerpt: 'The Paris Agreement set a goal of limiting global warming to 1.5°C above pre-industrial levels. But why exactly does that half-degree matter so much? I did some research and found some surprising answers…', tags: ['climate-change', 'research', 'discussion'], votes: 284, comments: 42, time: '3h ago', hot: 284, isOwn: false },
+                { id: 2, board: 'study', author: 'Jun Park', initials: 'JP', avatarBg: '#DBEAFE', avatarColor: '#1E40AF', title: 'My Pomodoro + HOLA quiz combo doubled my retention rate', excerpt: 'Been using a 25-min Pomodoro block followed by a 5-minute HOLA flashcard session for the past month. My quiz scores went from 62% average to 88%. Here\'s my exact schedule…', tags: ['study-tips', 'quiz'], votes: 156, comments: 28, time: '5h ago', hot: 156, isOwn: false },
+                { id: 3, board: 'eco', author: 'Reina Cruz', initials: 'RC', avatarBg: '#D8F3DC', avatarColor: '#1B4332', title: 'Reached 100 virtual trees on HOLA — here\'s what I learned about real reforestation', excerpt: 'Just hit the 100 trees milestone after 3 months on HOLA! It got me curious about actual reforestation projects. Turns out the Bonn Challenge aims to restore 350 million hectares of forests by 2030…', tags: ['eco-life', 'renewable'], votes: 421, comments: 67, time: '1h ago', hot: 421, isOwn: false },
+            ];
+
+            const trendingData = [
+                { title: 'Solar panel efficiency hits new record', board: 'Green Tech', comments: 89 },
+                { title: 'Best flashcard decks for biology finals', board: 'Study Help', comments: 54 },
+                { title: 'HOLA eco-quest: November challenge', board: 'Eco Warriors', comments: 121 },
+                { title: 'Is nuclear energy actually green?', board: 'Climate Talk', comments: 203 },
+            ];
+
+            const mockComments = [];
+
+     
+
+            let posts = [];
+            let activeBoard = 'all';
+            let sortMode = 'new';
+            let currentPost = null;
+            let threadVotesMap = {};
+            let commentLikes = {};
+            let dynamicComments = {};
+            let pendingDeleteId = null;
+            let openMenuId = null;
+
+
+            let treeCount = parseInt(localStorage.getItem(treeKey)) || 0;
+
+            function updateEcoStats() {
+                const pts = treeCount * 100;
+                const currentProgress = pts % 1000;
+                const percent = (currentProgress / 1000) * 100;
+
+                const treeDisplay = document.getElementById('uiTreeCount');
+                if (treeDisplay) treeDisplay.textContent = treeCount;
+
+                const ptsDisplay = document.getElementById('uiEcoPts');
+                if (ptsDisplay) ptsDisplay.textContent = pts + ' pts';
+
+                const bar = document.getElementById('ecoBar');
+                if (bar) bar.style.width = percent + '%';
+            }
+
+            function loadLocalPosts() {
+                const savedPosts = JSON.parse(localStorage.getItem(postKey));
+                if (savedPosts && savedPosts.length > 0) {
+                    posts = savedPosts;
+                } else {
+                    posts = [...fakePosts]; // Load fake data if nothing exists yet
+                }
+            }
+
+
+            function showToast(msg, type = 'green') {
+                const t = document.getElementById('toast');
+                t.textContent = msg;
+                t.className = `toast ${type} show`;
+                setTimeout(() => t.classList.remove('show'), 2800);
+            }
+
+
+            document.addEventListener('click', function () {
+                document.querySelectorAll('.post-menu-dropdown.open').forEach(d => d.classList.remove('open'));
+                openMenuId = null;
+            });
+
+  
+
+            function renderFeed() {
+                let filtered = activeBoard === 'all' ? [...posts] : posts.filter(p => p.board === activeBoard);
+                if (sortMode === 'hot') filtered.sort((a, b) => b.hot - a.hot);
+                else if (sortMode === 'new') filtered.sort((a, b) => b.id - a.id);
+                else if (sortMode === 'top') filtered.sort((a, b) => b.votes - a.votes);
+
+                const container = document.getElementById('feedContainer');
+                container.innerHTML = '';
+
+                if (filtered.length === 0) {
+                    container.innerHTML = `<div style="text-align:center;padding:3rem;color:var(--text-3);font-size:0.9rem;">No posts in this board yet. Be the first to post! 🌱</div>`;
+                    return;
+                }
+
+                filtered.forEach((post, i) => {
+                    const bc = boardColors[post.board] || boardColors['general'];
+                    const votes = post.votes + (threadVotesMap[post.id] || 0);
+                    const voteState = threadVotesMap['state_' + post.id] || 'none';
+
+                    const tagsHTML = post.tags.map(t => {
+                        const tc = tagColors[t] || { bg: '#F3F4F6', text: '#374151' };
+                        return `<span class="tag" style="background:${tc.bg};color:${tc.text}">${t}</span>`;
+                    }).join('');
+
+                    const menuHTML = post.isOwn ? `
+                                            <div class="post-menu-wrap" onclick="event.stopPropagation()">
+                                                <button class="post-menu-btn" onclick="toggleMenu(event, ${post.id})" title="Options">⋯</button>
+                                                <div class="post-menu-dropdown" id="menu-${post.id}">
+                                                    <button class="menu-item" onclick="openEdit(${post.id})">✏️ Edit Post</button>
+                                                    <button class="menu-item danger" onclick="openDeleteModal(${post.id})">🗑️ Delete Post</button>
+                                                </div>
+                                            </div>` : '';
+
+                    const card = document.createElement('div');
+                    card.className = 'post-card';
+                    card.style.animationDelay = (i * 0.05) + 's';
+                    card.innerHTML = `
+                                            ${menuHTML}
+                                            <div class="vote-col">
+                                                <button class="vote-btn up ${voteState === 'up' ? 'voted' : ''}" onclick="votePost(event,${post.id},'up')">▲</button>
+                                                <span class="vote-count ${votes > 0 ? 'positive' : votes < 0 ? 'negative' : ''}" id="vc-${post.id}">${votes}</span>
+                                                <button class="vote-btn down ${voteState === 'down' ? 'voted' : ''}" onclick="votePost(event,${post.id},'down')">▼</button>
+                                            </div>
+                                            <div class="post-body" onclick="openThread(${post.id})">
+                                                <div class="post-meta">
+                                                    <span class="post-board" style="background:${bc.bg};color:${bc.text}">${bc.emoji} ${post.board.charAt(0).toUpperCase() + post.board.slice(1)}</span>
+                                                    <span class="post-dot">•</span>
+                                                    <span class="post-author">by ${post.author}</span>
+                                                    ${post.isOwn ? '<span style="font-size:0.7rem;background:#D8F3DC;color:#1B4332;padding:1px 7px;border-radius:50px;font-weight:600;">You</span>' : ''}
+                                                    <span class="post-time">${post.time}</span>
+                                                </div>
+                                                <div class="post-title">${post.title}</div>
+                                                <div class="post-excerpt">${post.excerpt}</div>
+                                                <div class="post-tags">${tagsHTML}</div>
+                                                <div class="post-footer">
+                                                    <button class="post-action" onclick="event.stopPropagation();openThread(${post.id})">💬 ${post.comments} Comments</button>
+                                                    ${post.isOwn ? `
+                                                    <button class="post-action" style="color:var(--green)" onclick="event.stopPropagation();openEdit(${post.id})">✏️ Edit</button>
+                                                    <button class="post-action" style="color:var(--red)" onclick="event.stopPropagation();openDeleteModal(${post.id})">🗑️ Delete</button>
+                                                    ` : ''}
+                                                </div>
+                                            </div>`;
+                    container.appendChild(card);
+                });
+            }
+
+            function toggleMenu(e, id) {
+                e.stopPropagation();
+                const menu = document.getElementById('menu-' + id);
+                const isOpen = menu.classList.contains('open');
+                document.querySelectorAll('.post-menu-dropdown.open').forEach(d => d.classList.remove('open'));
+                if (!isOpen) menu.classList.add('open');
+            }
+
+            function filterBoard(board, e) {
+                if (e) e.stopPropagation();
+                activeBoard = board;
+                document.querySelectorAll('.board-item').forEach(b => b.classList.remove('active'));
+                if (e && e.currentTarget) e.currentTarget.classList.add('active');
+                renderFeed();
+            }
+
+            function sortPosts(mode, el) {
+                sortMode = mode;
+                document.querySelectorAll('.sort-tab').forEach(t => t.classList.remove('active'));
+                el.classList.add('active');
+                renderFeed();
+            }
+
+            function filterPosts(query) {
+                const q = query.toLowerCase();
+                if (!q) { renderFeed(); return; }
+                const container = document.getElementById('feedContainer');
+                container.innerHTML = '';
+                posts.filter(p => p.title.toLowerCase().includes(q) || p.excerpt.toLowerCase().includes(q)).forEach(post => {
+                    const bc = boardColors[post.board];
+                    const card = document.createElement('div');
+                    card.className = 'post-card';
+                    card.innerHTML = `
+                                            <div class="vote-col">
+                                                <button class="vote-btn up">▲</button>
+                                                <span class="vote-count positive">${post.votes}</span>
+                                                <button class="vote-btn down">▼</button>
+                                            </div>
+                                            <div class="post-body" onclick="openThread(${post.id})">
+                                                <div class="post-meta">
+                                                    <span class="post-board" style="background:${bc.bg};color:${bc.text}">${bc.emoji} ${post.board}</span>
+                                                    <span class="post-dot">•</span>
+                                                    <span class="post-author">by ${post.author}</span>
+                                                    <span class="post-time">${post.time}</span>
+                                                </div>
+                                                <div class="post-title">${post.title}</div>
+                                                <div class="post-footer"><button class="post-action">💬 ${post.comments}</button></div>
+                                            </div>`;
+                    container.appendChild(card);
+                });
+            }
+
+            function votePost(e, id, dir) {
+                e.stopPropagation();
+                const post = posts.find(p => p.id === id);
+                const prev = threadVotesMap['state_' + id] || 'none';
+                if (prev === dir) { threadVotesMap[id] = 0; threadVotesMap['state_' + id] = 'none'; }
+                else { threadVotesMap[id] = dir === 'up' ? 1 : -1; if (prev !== 'none') threadVotesMap[id] = dir === 'up' ? 2 : -2; threadVotesMap['state_' + id] = dir; }
+                const total = post.votes + (threadVotesMap[id] || 0);
+                const el = document.getElementById('vc-' + id);
+                if (el) { el.textContent = total; el.className = 'vote-count ' + (total > 0 ? 'positive' : total < 0 ? 'negative' : ''); }
+                renderFeed();
+            }
+
+
+            function openThread(id) {
+                const post = posts.find(p => p.id === id);
+                currentPost = post;
+                const bc = boardColors[post.board];
+                const votes = post.votes + (threadVotesMap[id] || 0);
+                document.getElementById('threadBoard').textContent = post.board.charAt(0).toUpperCase() + post.board.slice(1);
+                document.getElementById('threadMeta').innerHTML = `
+                                        <span class="post-board" style="background:${bc.bg};color:${bc.text}">${bc.emoji} ${post.board}</span>
+                                        <span class="post-dot">•</span>
+                                        <span class="post-author">by ${post.author}</span>
+                                        <span class="post-time" style="margin-left:auto">${post.time}</span>`;
+                document.getElementById('threadTitle').textContent = post.title;
+                document.getElementById('threadContent').textContent = post.excerpt;
+                document.getElementById('threadVoteCount').textContent = votes;
+                document.getElementById('threadTags').innerHTML = post.tags.map(t => { const tc = tagColors[t] || { bg: '#F3F4F6', text: '#374151' }; return `<span class="tag" style="background:${tc.bg};color:${tc.text}">${t}</span>`; }).join('');
+                const allComments = [...mockComments, ...(dynamicComments[id] || [])];
+                document.getElementById('threadCommentCount').textContent = allComments.length;
+                document.getElementById('commentCountLabel').textContent = allComments.length + ' comments';
+                renderComments(id);
+                document.getElementById('threadModal').classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeThread() { document.getElementById('threadModal').classList.remove('show'); document.body.style.overflow = ''; currentPost = null; }
+
+            function threadVoteUp() { const el = document.getElementById('threadVoteCount'); el.textContent = parseInt(el.textContent) + 1; }
+            function threadVoteDown() { const el = document.getElementById('threadVoteCount'); el.textContent = parseInt(el.textContent) - 1; }
+
+            function renderComments(postId) {
+                const allComments = [...mockComments, ...(dynamicComments[postId] || [])];
+                const container = document.getElementById('commentsContainer');
+                container.innerHTML = '';
+                allComments.forEach((c, i) => {
+                    const liked = commentLikes[postId + '_' + i] || false;
+                    const div = document.createElement('div');
+                    div.className = 'comment-card';
+                    div.style.animationDelay = (i * 0.06) + 's';
+                    div.innerHTML = `
+                                            <div class="comment-header">
+                                                <div class="comment-avatar" style="background:${c.avatarBg};color:${c.avatarColor}">${c.initials}</div>
+                                                <span class="comment-author">${c.author}</span>
+                                                <span class="comment-time">${c.time}</span>
+                                            </div>
+                                            <div class="comment-text">${c.text}</div>
+                                            <div class="comment-actions">
+                                                <button class="ca-btn ${liked ? 'liked' : ''}" onclick="likeComment(${postId},${i},this)">▲ ${c.likes + (liked ? 1 : 0)}</button>
+                                                <button class="ca-btn">💬 Reply</button>
+                                            </div>`;
+                    container.appendChild(div);
+                });
+            }
+
+            function likeComment(postId, idx, btn) {
+                const key = postId + '_' + idx;
+                commentLikes[key] = !commentLikes[key];
+                btn.classList.toggle('liked');
+                const c = idx < mockComments.length ? mockComments[idx] : (dynamicComments[postId] || [])[idx - mockComments.length];
+                btn.textContent = '▲ ' + (c.likes + (commentLikes[key] ? 1 : 0));
+            }
+
+            function addComment() {
+                const input = document.getElementById('commentInput');
+                const text = input.value.trim();
+                if (!text || !currentPost) return;
+                
+                if (!dynamicComments[currentPost.id]) dynamicComments[currentPost.id] = [];
+                dynamicComments[currentPost.id].push({ author: currentUserName, initials: currentUserName.charAt(0).toUpperCase(), avatarBg: '#D8F3DC', avatarColor: '#1B4332', text, time: 'just now', likes: 0 });
+                
+                input.value = '';
+                const allComments = [...mockComments, ...dynamicComments[currentPost.id]];
+                document.getElementById('threadCommentCount').textContent = allComments.length;
+                document.getElementById('commentCountLabel').textContent = allComments.length + ' comments';
+                renderComments(currentPost.id);
+
+                treeCount++;
+                localStorage.setItem(treeKey, treeCount);
+                updateEcoStats();
+
+                showToast('🌱 Answer posted! A tree was planted.');
+            }
+
+            function openCreate() {
+                document.getElementById('editingPostId').value = '';
+                document.getElementById('modalFormTitle').textContent = '✏️ Create a Post';
+                document.getElementById('formSubmitBtn').textContent = 'Post 🌱';
+                document.getElementById('newBoard').value = 'climate';
+                document.getElementById('newTitle').value = '';
+                document.getElementById('newContent').value = '';
+                document.getElementById('newTags').value = '';
+                document.getElementById('createModal').classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeCreate() {
+                document.getElementById('createModal').classList.remove('show');
+                document.body.style.overflow = '';
+            }
+
+
+            function openEdit(id) {
+                const post = posts.find(p => p.id === id);
+                if (!post) return;
+
+                document.getElementById('editingPostId').value = id;
+                document.getElementById('modalFormTitle').textContent = '✏️ Edit Post';
+                document.getElementById('formSubmitBtn').textContent = 'Save Changes ✓';
+                document.getElementById('newBoard').value = post.board;
+                document.getElementById('newTitle').value = post.title;
+                document.getElementById('newContent').value = post.excerpt;
+                document.getElementById('newTags').value = post.tags.join(', ');
+
+                document.getElementById('createModal').classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+
+  
+
+            function submitPost() {
+                const title = document.getElementById('newTitle').value.trim();
+                const content = document.getElementById('newContent').value.trim();
+                const board = document.getElementById('newBoard').value;
+                const tagsRaw = document.getElementById('newTags').value.trim();
+                const editingId = document.getElementById('editingPostId').value;
+
+                if (!title || !content) { alert('Please fill in the title and content.'); return; }
+
+                const tags = tagsRaw
+                    ? tagsRaw.split(',').map(t => t.trim().toLowerCase().replace(/\s+/g, '-')).filter(Boolean)
+                    : ['discussion'];
+
+                if (editingId) {
+                
+                    const idx = posts.findIndex(p => p.id == editingId);
+                    if (idx !== -1) {
+                        posts[idx] = { ...posts[idx], board, title, excerpt: content, tags, time: 'edited just now' };
+                    }
+                    showToast('✅ Post updated successfully!');
+                } else {
+            
+                    posts.unshift({
+                        id: Date.now(), board, author: currentUserName, initials: currentUserName.charAt(0).toUpperCase(),
+                        avatarBg: '#D8F3DC', avatarColor: '#1B4332',
+                        title, excerpt: content, tags,
+                        votes: 1, comments: 0, time: 'just now', hot: 999, isOwn: true
+                    });
+                    sortMode = 'new';
+                    document.querySelectorAll('.sort-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.sort-tab')[1].classList.add('active');
+          
+                    treeCount++;
+                    localStorage.setItem(treeKey, treeCount);
+                    updateEcoStats();
+
+                    showToast('🌱 Post created! A tree was planted.');
+                }
+
+         
+                localStorage.setItem(postKey, JSON.stringify(posts));
+
+                closeCreate();
+                renderFeed();
+            }
+
+      
+
+            function openDeleteModal(id) {
+                const post = posts.find(p => p.id === id);
+                if (!post) return;
+                pendingDeleteId = id;
+                document.getElementById('deletePreviewTitle').textContent = post.title;
+                document.getElementById('deleteModal').classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeDeleteModal() {
+                document.getElementById('deleteModal').classList.remove('show');
+                document.body.style.overflow = '';
+                pendingDeleteId = null;
+            }
+
+            function confirmDelete() {
+                if (pendingDeleteId === null) return;
+                
+               
+                posts = posts.filter(p => p.id !== pendingDeleteId);
+                localStorage.setItem(postKey, JSON.stringify(posts));
+                
+                closeDeleteModal();
+                renderFeed();
+                showToast('🗑️ Post deleted.', 'red');
+            }
+
+
+            function renderTrending() {
+                document.getElementById('trendingList').innerHTML = trendingData.map((t, i) => `
+                                        <div class="trending-item">
+                                            <div class="trending-rank">${i + 1}</div>
+                                            <div>
+                                                <div class="trending-title">${t.title}</div>
+                                                <div class="trending-meta">${t.board} · ${t.comments} comments</div>
+                                            </div>
+                                        </div>`).join('');
+            }
+
+
+
+            loadLocalPosts(); 
+            updateEcoStats(); 
+            renderFeed();
+            renderTrending();
+    </script>
+</body>
+</html>

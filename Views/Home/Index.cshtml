@@ -1,0 +1,337 @@
+﻿@model HOLA.Models.LandingPageViewModel
+@{
+    ViewData["Title"] = "HOLA - Eco-Friendly Q&A Platform";
+}
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+            /* [Keep ALL of your original CSS exactly the same here] */
+            :root {
+                --primary-green: #2ECC71;
+                --dark-green: #27AE60;
+                --accent-orange: #E67E22;
+                --accent-red: #E74C3C;
+                --accent-blue: #3498DB;
+                --neutral-dark: #2C3E50;
+                --neutral-light: #ECF0F1;
+                --cream: #FFF5E6;
+                --shadow: rgba(0, 0, 0, 0.1);
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: 'Outfit', sans-serif;
+                background: linear-gradient(135deg, #FFF5E6 0%, #E8F5E9 100%);
+                color: var(--neutral-dark);
+                overflow-x: hidden;
+            }
+
+            /* Animated background elements */
+            .bg-decoration { position: fixed; z-index: 0; opacity: 0.1; }
+            .leaf-1 { top: 10%; left: 5%; width: 100px; height: 100px; background: var(--primary-green); border-radius: 0 100% 0 100%; animation: float 6s ease-in-out infinite; }
+            .leaf-2 { bottom: 15%; right: 10%; width: 150px; height: 150px; background: var(--accent-orange); border-radius: 100% 0 100% 0; animation: float 8s ease-in-out infinite reverse; }
+            .circle-1 { top: 50%; right: -50px; width: 200px; height: 200px; background: var(--accent-blue); border-radius: 50%; animation: pulse 4s ease-in-out infinite; }
+
+            @@keyframes float {
+                0%, 100% { transform: translateY(0) rotate(0deg); }
+                50% { transform: translateY(-30px) rotate(10deg); }
+            }
+            @@keyframes pulse {
+                0%, 100% { transform: scale(1); opacity: 0.1; }
+                50% { transform: scale(1.1); opacity: 0.15; }
+            }
+            @@keyframes slideInLeft { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
+            @@keyframes slideInRight { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+            @@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+            /* Navigation */
+            nav {
+                position: sticky; top: 0; z-index: 1000; background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px); box-shadow: 0 2px 20px var(--shadow);
+                padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center;
+                animation: slideInDown 0.6s ease-out; margin: auto;
+            }
+            @@keyframes slideInDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+
+            .logo { display: flex; align-items: center; gap: 12px; font-size: 2rem; font-weight: 800; color: var(--primary-green); }
+            .logo-icon { width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary-green), var(--dark-green)); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; transform: rotate(-10deg); box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3); }
+
+            .nav-links { display: flex; gap: 40px; list-style: none; margin: 0 auto; padding: 0; }
+            .nav-links a { text-decoration: none; color: #24364b; font-weight: 600; position: relative; }
+            .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 3px; background: var(--primary-green); transition: width 0.3s; }
+            .nav-links a:hover::after { width: 100%; }
+            .nav-links a:hover { color: var(--primary-green); }
+
+            .btn-signin {
+                background: linear-gradient(135deg, var(--accent-red), #C0392B); color: white; padding: 0.8rem 2rem;
+                border-radius: 50px; text-decoration: none; font-weight: 700; box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+                transition: transform 0.3s, box-shadow 0.3s; display: inline-flex; align-items: center; gap: 8px;
+            }
+            .btn-signin:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4); }
+
+            /* Hero Section */
+            .hero { position: relative; padding: 6rem 5% 4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; max-width: 1400px; margin: 0 auto; }
+            .hero-content { animation: slideInLeft 0.8s ease-out; }
+            .hero-badge { display: inline-block; background: linear-gradient(135deg, var(--accent-orange), #D35400); color: white; padding: 0.6rem 1.5rem; border-radius: 50px; font-size: 0.9rem; font-weight: 700; margin-bottom: 1.5rem; box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3); animation: fadeInUp 1s ease-out 0.2s backwards; }
+            .hero h1 { font-size: 4rem; font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; animation: fadeInUp 1s ease-out 0.3s backwards; }
+            .hero h1 .highlight { color: var(--primary-green); position: relative; display: inline-block; }
+            .hero h1 .highlight::after { content: ''; position: absolute; bottom: 5px; left: 0; width: 100%; height: 15px; background: rgba(46, 204, 113, 0.2); z-index: -1; border-radius: 5px; }
+            .hero p { font-size: 1.2rem; line-height: 1.8; color: #555; margin-bottom: 2.5rem; animation: fadeInUp 1s ease-out 0.4s backwards; }
+            
+            .hero-buttons { display: flex; gap: 0.8rem; animation: fadeInUp 1s ease-out 0.5s backwards; flex-wrap: nowrap; }
+            .hero-buttons .btn-secondary { width: 160px; height: 60px; border-radius: 50px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 5px; white-space: nowrap; box-shadow: 0 4px 15px var(--shadow); }
+            .btn-primary { background: linear-gradient(135deg, var(--primary-green), var(--dark-green)); color: white; }
+            .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 6px 25px rgba(46, 204, 113, 0.4); }
+            .btn-secondary { background: white; color: var(--neutral-dark); border: 2px solid var(--primary-green); }
+            .btn-secondary:hover { background: var(--neutral-light); transform: translateY(-3px); }
+
+            /* Hero Visual */
+            .hero-visual { position: relative; animation: slideInRight 0.8s ease-out; }
+            .hero-card { background: white; border-radius: 30px; padding: 2.5rem; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15); position: relative; overflow: hidden; }
+            .hero-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 8px; background: linear-gradient(90deg, var(--primary-green), var(--accent-blue), var(--accent-orange)); }
+            .badge-group { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+            .badge { background: var(--cream); padding: 1rem 1.5rem; border-radius: 20px; display: flex; align-items: center; gap: 12px; font-weight: 600; box-shadow: 0 4px 12px var(--shadow); animation: fadeInUp 1s ease-out backwards; }
+            .badge:nth-child(1) { animation-delay: 0.6s; } .badge:nth-child(2) { animation-delay: 0.7s; } .badge:nth-child(3) { animation-delay: 0.8s; } .badge:nth-child(4) { animation-delay: 0.9s; }
+            .badge-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+            .badge-icon.green { background: rgba(46, 204, 113, 0.2); } .badge-icon.orange { background: rgba(230, 126, 34, 0.2); } .badge-icon.blue { background: rgba(52, 152, 219, 0.2); }
+            .badge-title { font-size: 0.9rem; color: #777; } .badge-text { color: #000; font-weight: 700; font-size: 1rem; }
+            .illustration-img { width: 100%; border-radius: 20px; margin-bottom: 1.5rem; }
+
+            /* Stats Section */
+            .stats { background: white; padding: 3rem 5%; margin: 3rem 0; box-shadow: 0 -10px 30px var(--shadow), 0 10px 30px var(--shadow); }
+            .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3rem; max-width: 1200px; margin: 0 auto; }
+            .stat-item { text-align: center; animation: fadeInUp 1s ease-out backwards; }
+            .stat-item:nth-child(1) { animation-delay: 0.2s; } .stat-item:nth-child(2) { animation-delay: 0.3s; } .stat-item:nth-child(3) { animation-delay: 0.4s; } .stat-item:nth-child(4) { animation-delay: 0.5s; }
+            .stat-number { font-size: 3rem; font-weight: 800; color: var(--primary-green); font-family: 'Space Mono', monospace; }
+            .stat-label { font-size: 1rem; color: #777; margin-top: 0.5rem; }
+
+            /* Features Section */
+            .features { padding: 5rem 5%; max-width: 1400px; margin: 0 auto; }
+            .section-header { text-align: center; margin-bottom: 4rem; animation: fadeInUp 1s ease-out; }
+            .section-header h2 { font-size: 3rem; font-weight: 800; margin-bottom: 1rem; }
+            .section-header p { font-size: 1.2rem; color: #666; }
+            .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; }
+            .feature-card { background: white; padding: 2.5rem; border-radius: 25px; box-shadow: 0 10px 30px var(--shadow); transition: transform 0.3s, box-shadow 0.3s; animation: fadeInUp 1s ease-out backwards; position: relative; overflow: hidden; }
+            .feature-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, var(--primary-green), var(--accent-blue)); transform: scaleX(0); transition: transform 0.3s; }
+            .feature-card:hover::before { transform: scaleX(1); }
+            .feature-card:nth-child(1) { animation-delay: 0.2s; } .feature-card:nth-child(2) { animation-delay: 0.3s; } .feature-card:nth-child(3) { animation-delay: 0.4s; } .feature-card:nth-child(4) { animation-delay: 0.5s; } .feature-card:nth-child(5) { animation-delay: 0.6s; } .feature-card:nth-child(6) { animation-delay: 0.7s; }
+            .feature-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2); }
+            
+            .feature-icon { width: 70px; height: 70px; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 1.5rem; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); }
+            .feature-icon.green { background: linear-gradient(135deg, #2ECC71, #27AE60); } .feature-icon.orange { background: linear-gradient(135deg, #E67E22, #D35400); } .feature-icon.blue { background: linear-gradient(135deg, #3498DB, #2980B9); } .feature-icon.red { background: linear-gradient(135deg, #E74C3C, #C0392B); } .feature-icon.purple { background: linear-gradient(135deg, #9B59B6, #8E44AD); } .feature-icon.yellow { background: linear-gradient(135deg, #F1C40F, #F39C12); }
+            .feature-card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--neutral-dark); }
+            .feature-card p { color: #666; line-height: 1.6; }
+
+            /* CTA Section */
+            .cta { background: linear-gradient(135deg, var(--primary-green), var(--dark-green)); color: white; padding: 5rem 5%; text-align: center; margin: 4rem 0; position: relative; overflow: hidden; }
+            .cta::before { content: ''; position: absolute; top: -50%; right: -10%; width: 500px; height: 500px; background: rgba(255, 255, 255, 0.1); border-radius: 50%; }
+            .cta h2 { font-size: 3rem; font-weight: 800; margin-bottom: 1.5rem; position: relative; z-index: 1; }
+            .cta p { font-size: 1.3rem; margin-bottom: 2.5rem; opacity: 0.9; position: relative; z-index: 1; }
+            .cta .btn-primary { background: white; color: var(--primary-green); font-size: 1.2rem; padding: 1.2rem 3rem; position: relative; z-index: 1; border: none; cursor: pointer; text-decoration: none; border-radius: 50px; font-weight: 700;}
+            .cta .btn-primary:hover { background: var(--cream); }
+
+            /* Footer */
+            footer { background: var(--neutral-dark); color: white; padding: 3rem 5%; text-align: center; }
+            footer p { opacity: 0.8; }
+  
+            /* Responsive */
+            @@media (max-width: 1024px) { .hero { grid-template-columns: 1fr; gap: 3rem; } .features-grid { grid-template-columns: repeat(2, 1fr); } .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; } }
+            @@media (max-width: 768px) { .hero h1 { font-size: 2.5rem; } .features-grid { grid-template-columns: 1fr; } .nav-links { display: none; } .stats-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="bg-decoration leaf-1"></div>
+    <div class="bg-decoration leaf-2"></div>
+    <div class="bg-decoration circle-1"></div>
+
+    <nav>
+        <div class="logo">
+            <div class="logo-icon">🌱</div>
+            <span>HOLA</span>
+        </div>
+       
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-badge">💡 Q&A Platform for the Planet</div>
+            <h1>
+                The <span class="highlight">Eco-Friendly</span><br>
+                Q&A Community
+            </h1>
+            <p>
+                Transform your curiosity into real-world impact! HOLA is a knowledge-sharing community where every question you answer helps plant a virtual tree. Share what you know, learn what you don't, and heal the planet together.
+            </p>
+            <div class="hero-buttons">
+                <a asp-controller="Account" asp-action="Login" class="btn-secondary">
+                    🚀 Sign In
+                </a>
+                <a asp-controller="Account" asp-action="Register" class="btn-secondary">
+                    🌱 Register
+                </a>
+                <a href="#features" class="btn-secondary">
+                    ❓ Learn More
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="hero-card">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop"
+                     alt="Community sharing knowledge"
+                     class="illustration-img">
+                
+                <div class="badge-group">
+                    <div class="badge">
+                        <div class="badge-icon green">🛡️</div>
+                        <div>
+                            <div class="badge-title">Community</div>
+                            <div class="badge-text">Safe & Supportive</div>
+                        </div>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-icon orange">🌍</div>
+                        <div>
+                            <div class="badge-title">Impact</div>
+                            <div class="badge-text">Eco-Friendly</div>
+                        </div>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-icon blue">🧠</div>
+                        <div>
+                            <div class="badge-title">Knowledge</div>
+                            <div class="badge-text">Expert Answers</div>
+                        </div>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-icon blue">👥</div>
+                        <div>
+                            <div class="badge-title">Loved Worldwide</div>
+                            <div class="badge-text">Trusted by 10K+ Users</div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">@Model.TotalStudents.ToString("N0")</div>
+                <div class="stat-label">Active Members</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">@Model.TreesPlanted.ToString("N0")</div>
+                <div class="stat-label">Virtual Trees Planted</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">@Model.CO2Saved.ToString("N0") kg</div>
+                <div class="stat-label">CO₂ Saved</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">@Model.QuizzesCompleted.ToString("N0")</div>
+                <div class="stat-label">Answers Provided</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="section-header">
+            <h2>Why Ask on HOLA?</h2>
+            <p>Experience a Q&A platform where your knowledge creates a greener world.</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon green">💡</div>
+                <h3>Ask Anything</h3>
+                <p>From complex climate science to daily eco-habits, post your questions and get answers from a passionate community.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon orange">🌳</div>
+                <h3>Answer to Plant Trees</h3>
+                <p>Every time you provide a helpful answer, you earn Eco Points. Gather enough points, and a virtual tree is planted in your name!</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon blue">👍</div>
+                <h3>Community Upvotes</h3>
+                <p>The best answers rise to the top. Gain reputation and trust by providing well-researched and insightful responses.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon red">💬</div>
+                <h3>Topic Spaces</h3>
+                <p>Follow specific boards like Green Tech, Climate Talk, or General Chat to see questions tailored to your expertise.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon purple">🌍</div>
+                <h3>Real-World Impact</h3>
+                <p>Track your carbon footprint savings and watch your personal virtual forest grow as you interact with the community.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon yellow">🏆</div>
+                <h3>Top Contributor Badges</h3>
+                <p>Unlock special badges for being a top answerer in specific topics and showcase your expertise.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <h2>Ready to Share Your Knowledge?</h2>
+        <p>Join thousands of users answering questions and planting trees.</p>
+        <a asp-controller="Account" asp-action="Register" class="btn-primary">Join the Community</a>
+    </section>
+
+    <footer id="contact">
+        <p>&copy; 2026 HOLA - The Eco-Friendly Q&A Platform. All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">Spreading knowledge and planting trees 🌱</p>
+    </footer>
+
+    <script>
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+                });
+            });
+
+            // Add animation on scroll
+            const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -100px 0px' };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.feature-card, .stat-item').forEach(el => { observer.observe(el); });
+    </script>
+</body>
+</html>
